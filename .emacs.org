@@ -1,3 +1,4 @@
+#+BEGIN_SRC emacs-lisp
 ;(require 'org)
 ;(define-key global-map "\C-cl" 'org-store-link)
 ;(define-key global-map "\C-ca" 'org-agenda)
@@ -123,7 +124,12 @@
   :config)
 
 ;; org-mode
+
+;; Folding character
 (setq org-ellipsis " \u2935")
+
+;; Prettify latex symbols
+(setq-default org-pretty-entities t)
 
 (use-package org-ref
   :ensure t
@@ -203,3 +209,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+ #+END_SRC
