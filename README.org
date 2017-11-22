@@ -1,18 +1,45 @@
-#+BEGIN_SRC emacs-lisp
-;(require 'org)
-;(define-key global-map "\C-cl" 'org-store-link)
-;(define-key global-map "\C-ca" 'org-agenda)
-;(setq org-log-done t)
+#+TITLE: My Emacs Config
+#+AUTHOR: Daniel Laguna
+#+EMAIL: labellson@gmail.com
 
+* Introduction
+The idea of generating an emacs config file using =org-mode= is taken from [[https://youtu.be/SzA2YODtgK4][Harry Schwartz's talk about org-mode]]. When Emacs starts, all the elisp code blocks from this file are parsed and used to generate the config. This is done through [[http://orgmode.org/worg/org-contrib/babel/][org-babel]]. =Babel= is Org-mode's ability to execute source code within =org-mode= documents.
+
+To use this config file, you need to evaluate this file on startup. This can be done writing this line ~(org-babel-load-file "~/.my-emacs/README.org")~ into your [[file:init.el][init.el]].
+
+*NOTE*: This file assumes that your =org-mode= config file is located into =~/.my-emacs/README.org=.
+
+* Basic Emacs Setup
+** My information
+Relevant personal information that Emacs needs.
+
+#+BEGIN_SRC emacs-lisp
+(setq user-full-name "Daniel Laguna"
+    user-mail-address "labellson@gmail.com"
+    calendar-latitude 40.33
+    calendar-longitude -3.76
+    calendar-location-name "Madrid, Spain")
+#+END_SRC
+
+** Adding MELPA 
+MELPA is the main package repository for Emacs. There are more repositories and you are able to add more than one. *But make sure you are using HTTPS!!*.
+
+#+BEGIN_SRC emacs-lisp
 ;; Set up the package manager and repositories
 (require 'package)
 
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
+(add-to-list 'package-archives '("MELPA" . "https://melpa.org/packages/"))
+(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/"))
 
 (setq package-enable-at-startup nil)
 (package-initialize)
+#+END_SRC
+
+* WIP
+These source blocks needs to be documented.
+
+#+BEGIN_SRC emacs-lisp
+
 
 ;; Install use-package if not installed
 (unless (package-installed-p 'use-package)
@@ -210,3 +237,14 @@
  ;; If there is more than one, they won't work right.
  )
  #+END_SRC
+
+* Acknowledgments
+- Thanks to Diego Vicente. He discovered me Emacs and =org-mode=. Also, many aspects of my Emacs file are inpired by his [[https://github.com/DiegoVicen/my-emacs][config file]].
+
+* TODO-List
+** TODO Format and document all the config file
+** TODO Add different hooks for different mayor modes like org-mode
+** TODO Configure Emacs as an IDE
+*** TODO Python
+*** TODO C++
+*** TODO C#
