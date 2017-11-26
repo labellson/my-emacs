@@ -35,6 +35,7 @@ MELPA is the main package repository for Emacs. There are more repositories and 
 (package-initialize)
 #+END_SRC
 
+
 * WIP
 These source blocks needs to be documented.
 
@@ -197,6 +198,9 @@ These source blocks needs to be documented.
   :ensure t
   :config (add-hook 'org-mode-hook (lambda () (org-autolist-mode))))
 
+;; Set the agenda files
+(setq org-agenda-files (list "~/Drive/org/agenda.org"))
+
 (use-package org-bullets
   :ensure t)
   ;:config
@@ -238,6 +242,24 @@ These source blocks needs to be documented.
  )
  #+END_SRC
 
+* PDF Tools
+#+BEGIN_SRC emacs-lisp
+(use-package pdf-tools
+  :ensure t
+  :config
+
+  (pdf-tools-install))
+
+#+END_SRC
+  
+There's a conflict between =evil-mode= and =pdf-view-mode=. =evil= cause that pdf display keeps blinking. [[https://github.com/politza/pdf-tools/issues/201][xuhdev]] gives a solution to deal with this conflict.
+
+#+BEGIN_SRC emacs-lisp
+(evil-set-initial-state 'pdf-view-mode 'emacs)
+(add-hook 'pdf-view-mode-hook
+  (lambda ()
+    (set (make-local-variable 'evil-emacs-state-cursor) (list nil))))
+#+END_SRC
 * Acknowledgments
 - Thanks to Diego Vicente. He discovered me Emacs and =org-mode=. Also, many aspects of my Emacs file are inpired by his [[https://github.com/DiegoVicen/my-emacs][config file]].
 
