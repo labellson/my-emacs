@@ -35,7 +35,35 @@ MELPA is the main package repository for Emacs. There are more repositories and 
 (package-initialize)
 #+END_SRC
 
+* Emacs GUI
+** =delight= to manage mode names in the mode-line
+This package let us rename or hide mode names in the mode-line. It's fully compatible with =use-package=.
 
+#+BEGIN_SRC emacs-lisp
+(use-package delight
+  :ensure t
+  :demand t)
+#+END_SRC
+
+Emacs provides some minor modes that I want to hide as well.
+
+#+BEGIN_SRC emacs-lisp
+(use-package emacs
+  :delight
+  (auto-revert-mode)
+  (visual-line-mode))
+#+END_SRC
+
+* Programming Modes
+** =company=
+[[http://company-mode.github.io/][Company]] is a text completion framework for Emacs. The name stands for "complete anything". It uses pluggable back-ends and front-ends to retrieve and display completion candidates. 
+
+#+BEGIN_SRC emacs-lisp
+(use-package company
+  :delight
+  :ensure t)
+#+END_SRC
+   
 * WIP
 These source blocks needs to be documented.
 
