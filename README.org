@@ -58,10 +58,22 @@ Emacs provides some minor modes that I want to hide as well.
 ** =company=
 [[http://company-mode.github.io/][Company]] is a text completion framework for Emacs. The name stands for "complete anything". It uses pluggable back-ends and front-ends to retrieve and display completion candidates. 
 
+Add =company-tng-frontend= if you like YCM Vim completion :P
+
 #+BEGIN_SRC emacs-lisp
 (use-package company
   :delight
-  :ensure t)
+  :ensure t
+  :config
+    (eval-after-load 'company
+      '(progn
+        (add-to-list 'company-frontends 'company-tng-frontend)
+        (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
+        (define-key company-active-map [tab] 'company-complete-common-or-cycle)
+        (define-key company-active-map (kbd "S-TAB") 'company-select-previous)
+        (define-key company-active-map (kbd "<backtab>") 'company-select-previous)
+        
+        (define-key company-mode-map (kbd "C-<SPC>") 'company-complete))))
 #+END_SRC
    
 * WIP
