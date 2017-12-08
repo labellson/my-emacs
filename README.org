@@ -87,6 +87,41 @@ With =company-flx= we add fuzzy matching to =company=. But it seems only work wi
       (company-flx-mode +1)))
 #+END_SRC
    
+** Python
+*** =anaconda-mode=
+[[https://github.com/proofit404/anaconda-mode][Anaconda]] provides context code completion, jump to definitions, find references and documentation view through =eldoc= for python mode. Its usage is very simple and it integrates with =company-mode=.
+
+#+BEGIN_SRC emacs-lisp
+(use-package anaconda-mode
+  :ensure t
+  :delight
+  :config
+    (add-hook 'python-mode-hook 'anaconda-mode)
+    (add-hook 'python-mode-hook 'anaconda-eldoc-mode))
+#+END_SRC
+
+**** Default Keybinding
+| Keybinding | Description                    |
+|------------+--------------------------------|
+| C-M-i      | anaconda-mode-complete         |
+| M-.        | anaconda-mode-find-definitions |
+| M-,        | anaconda-mode-find-assignments |
+| M-r        | anaconda-mode-find-references  |
+| M-*        | anaconda-mode-go-back          |
+| M-?        | anaconda-mode-show-doc         |
+   
+*** =company-anaconda=
+This is a backend for =company-mode= that works with =anaconda-mode=. Necessary if you want autocompletion.
+
+#+BEGIN_SRC emacs-lisp
+(use-package company-anaconda
+  :ensure t
+  :delight
+  :config
+    (eval-after-load "company"
+      '(add-to-list 'company-backends '(company-anaconda :with company-capf))))
+#+END_SRC
+
 * WIP
 These source blocks needs to be documented.
 
