@@ -65,6 +65,7 @@ Add =company-tng-frontend= if you like YCM Vim completion :P
   :delight
   :ensure t
   :config
+    (setq company-tooltip-align-annotations t)
     (eval-after-load 'company
       '(progn
         (add-to-list 'company-frontends 'company-tng-frontend)
