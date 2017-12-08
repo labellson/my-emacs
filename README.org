@@ -75,6 +75,17 @@ Add =company-tng-frontend= if you like YCM Vim completion :P
         
         (define-key company-mode-map (kbd "C-<SPC>") 'company-complete))))
 #+END_SRC
+
+With =company-flx= we add fuzzy matching to =company=. But it seems only work with =company-capf= backend.
+
+#+BEGIN_SRC emacs-lisp
+(use-package company-flx
+  :delight
+  :ensure t
+  :config
+    (eval-after-load 'company
+      (company-flx-mode +1)))
+#+END_SRC
    
 * WIP
 These source blocks needs to be documented.
