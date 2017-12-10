@@ -68,6 +68,7 @@ Add =company-tng-frontend= if you like YCM Vim completion :P
     (setq company-tooltip-align-annotations t)
     (eval-after-load 'company
       '(progn
+        (add-hook 'prog-mode-hook 'company-mode)
         (add-to-list 'company-frontends 'company-tng-frontend)
         (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
         (define-key company-active-map [tab] 'company-complete-common-or-cycle)
@@ -89,6 +90,13 @@ With =company-flx= we add fuzzy matching to =company=. But it seems only work wi
 #+END_SRC
    
 ** Python
+In order to use ipython as default interpreter set these lines below.
+
+#+BEGIN_SRC emacs-lisp
+(setq python-shell-interpreter "ipython"
+       python-shell-interpreter-args "--simple-prompt -i")
+#+END_SRC
+
 *** =anaconda-mode=
 [[https://github.com/proofit404/anaconda-mode][Anaconda]] provides context code completion, jump to definitions, find references and documentation view through =eldoc= for python mode. Its usage is very simple and it integrates with =company-mode=.
 
