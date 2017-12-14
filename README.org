@@ -146,6 +146,20 @@ This is a backend for =company-mode= that works with =anaconda-mode=. Necessary 
       '(add-to-list 'company-backends '(company-anaconda :with company-capf))))
 #+END_SRC
 
+* Org-mode
+** IEEE export
+For class assignments and who-knows-what in the future, I was able to integrate a IEEE Conference template in org-mode export via Latex. To use it, just include the IEEEtran class in your org file. It has not been thoroughly tested, but its headers, index, abstract and general aesthetic works perfectly out of the box.
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'org-latex-classes
+             '("IEEEtran" "\\documentclass[11pt]{IEEEtran}"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
+             t)
+#+END_SRC
 * WIP
 These source blocks needs to be documented.
 
