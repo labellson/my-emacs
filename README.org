@@ -146,6 +146,30 @@ This is a backend for =company-mode= that works with =anaconda-mode=. Necessary 
       '(add-to-list 'company-backends '(company-anaconda :with company-capf))))
 #+END_SRC
 
+** =hideshow=
+This minor mode provides selectively folding for code and comment blocks. Blocks are defined per mayor mode. It cames pre-configured with default mayor modes like =c-mode, c++mode..=
+
+You can configure this minor mode and enable it in different mayor modes with this config. This [[https://emacs.stackexchange.com/questions/2884/the-old-how-to-fold-xml-question][issue]] explains how to configure for =nxml-mode=.
+
+#+BEGIN_SRC emacs-lisp
+(use-package hideshow
+  :ensure t
+  :delight
+  :bind (:map nxml-mode-map
+		 ("C-c h" . hs-toggle-hiding))
+  :config
+  (add-to-list 'hs-special-modes-alist
+             '(nxml-mode
+               "<!--\\|<[^/>]*[^/]>"
+               "-->\\|</[^/>]*[^/]>"
+
+               "<!--"
+			   nxml-forward-element
+               nil))
+)
+
+(add-hook 'nxml-mode-hook 'hs-minor-mode)
+#+END_SRC
 * WIP
 These source blocks needs to be documented.
 
