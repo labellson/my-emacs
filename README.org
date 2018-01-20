@@ -413,11 +413,11 @@ When writing source code on a block, if this variable is enabled it will use the
 #+END_SRC
 
 ** Source syntax highlight in =latex= exports
-Using =org-mode= =latex= export you can get syntax highlighting in pdf using the =minted= package, wich uses =Python= =pygments= package. This snippet was taken from [[http://joonro.github.io/blog/posts/org-mode-outputdir-minted-latex-export.html][Joon's Blog]].
+Using =org-mode= =latex= export you can get syntax highlighting in pdf using the =minted= package, wich uses =Python= =pygments= package. This snippet was taken from [[http://joonro.github.io/blog/posts/org-mode-outputdir-minted-latex-export.html][Joon's Blog]]. [[https://github.com/gpoore/minted/issues/92][Issue]] ~cache=false~.
 
 #+BEGIN_SRC emacs-lisp
 (require 'ox-latex)
-(add-to-list 'org-latex-packages-alist '("" "minted"))
+(add-to-list 'org-latex-packages-alist '("cache=false" "minted"))
 (setq org-latex-listings 'minted)
 #+END_SRC
 
