@@ -146,6 +146,19 @@ This is a backend for =company-mode= that works with =anaconda-mode=. Necessary 
       '(add-to-list 'company-backends '(company-anaconda :with company-capf))))
 #+END_SRC
 
+** Javascript
+*** =js-2mode=
+Better [[https://emacs.cafe/emacs/javascript/setup/2017/04/23/emacs-setup-javascript.html][Javascript mode]].
+
+#+BEGIN_SRC emacs-lisp
+(use-package js2-mode
+  :ensure t
+  :delight
+  :config
+
+  (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+  (add-hook 'js2-mode-hook #'js2-imenu-extras-mode))
+#+END_SRC
 ** =hideshow=
 This minor mode provides selectively folding for code and comment blocks. Blocks are defined per mayor mode. It cames pre-configured with default mayor modes like =c-mode, c++mode..=
 
