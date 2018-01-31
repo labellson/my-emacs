@@ -388,27 +388,7 @@ These source blocks needs to be documented.
 
 ;; Keyboard maps
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector
-   ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
- '(custom-enabled-themes (quote (gruvbox-dark-hard)))
- '(custom-safe-themes
-   (quote
-    ("7f3ef7724515515443f961ef87fee655750512473b1f5bf890e2dc7e065f240c" "65d9573b64ec94844f95e6055fe7a82451215f551c45275ca5b78653d505bc42" "5a970147df34752ed45bfdf0729233abfc085d9673ae7e40210c5e2d8f624b08" "dc9a8d70c4f94a28aafc7833f8d05667601968e6c9bf998791c39fcb3e4679c9" "125fd2180e880802ae98b85f282b17f0aa8fa6cb9fc4f33d7fb19a38c40acef0" "2b6bd2ebad907ee42b3ffefa4831f348e3652ea8245570cdda67f0034f07db93" default)))
- '(package-selected-packages (quote (ox-latex-chinese zlc helm evil))))
-
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
- #+END_SRC
+#+END_SRC
 
 * Org-mode
 ** Enable =auto-fill-mode=
