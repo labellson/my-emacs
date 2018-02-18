@@ -177,7 +177,7 @@ Better [[https://emacs.cafe/emacs/javascript/setup/2017/04/23/emacs-setup-javasc
   (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
   (add-hook 'js2-mode-hook #'js2-imenu-extras-mode))
 #+END_SRC
-** =hideshow=
+** COMMENT =hideshow=
 This minor mode provides selectively folding for code and comment
 blocks. Blocks are defined per mayor mode. It cames pre-configured with default
 mayor modes like =c-mode, c++mode..=
@@ -189,8 +189,7 @@ this config. This [[https://emacs.stackexchange.com/questions/2884/the-old-how-t
 (use-package hideshow
   :ensure t
   :delight
-  :bind (:map nxml-mode-map
-		 ("C-c h" . hs-toggle-hiding))
+  :bind ("C-c h" . hs-toggle-hiding)
   :config
   (add-to-list 'hs-special-modes-alist
              '(nxml-mode
@@ -203,6 +202,7 @@ this config. This [[https://emacs.stackexchange.com/questions/2884/the-old-how-t
 )
 
 (add-hook 'nxml-mode-hook 'hs-minor-mode)
+(add-hook 'python-mode-hook 'hs-minor-mode)
 #+END_SRC
 * WIP
 These source blocks needs to be documented.
