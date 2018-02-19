@@ -43,6 +43,15 @@ you are able to add more than one. *But make sure you are using HTTPS!!*.
 (package-initialize)
 #+END_SRC
 
+** Securing Emacs
+Some safety tips regarding securing your editor are covered in [[https://glyph.twistedmatrix.com/2015/11/editor-malware.html][Your Text Editor
+is Malware]]. 
+
+First of all, enable checking trust on TLS connections.
+
+#+BEGIN_SRC emacs-lisp
+(setq tls-checktrust t)
+#+END_SRC
 ** TAB
 =<TAB>= key run indentation in most of the major mode. Sometimes, I want to
 =<TAB>= behaves as inserting a tab character. I can do this typing =C-q-<TAB>=
