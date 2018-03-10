@@ -458,6 +458,13 @@ taken from [[http://joonro.github.io/blog/posts/org-mode-outputdir-minted-latex-
 (setq org-latex-listings 'minted)
 #+END_SRC
 
+** Auto cleanup =latex= intermediary files
+I hate all this intermediary files that =latex= creates. Just blow up all my
+directories. So, I've found a solution in this [[https://emacs.stackexchange.com/questions/23982/cleanup-org-mode-export-intermediary-file][emacs stack exchange question]].
+
+#+BEGIN_SRC emacs-lisp
+(setq org-latex-logfiles-extensions (quote ("lof" "lot" "tex~" "aux" "idx" "log" "out" "toc" "nav" "snm" "vrb" "dvi" "fdb_latexmk" "blg" "brf" "fls" "entoc" "ps" "spl" "bbl")))
+#+END_SRC
 * Packages & Tools
 ** =ivy=
 =ivy= is a minimalistic completion engine.
