@@ -465,6 +465,20 @@ directories. So, I've found a solution in this [[https://emacs.stackexchange.com
 #+BEGIN_SRC emacs-lisp
 (setq org-latex-logfiles-extensions (quote ("lof" "lot" "tex~" "aux" "idx" "log" "out" "toc" "nav" "snm" "vrb" "dvi" "fdb_latexmk" "blg" "brf" "fls" "entoc" "ps" "spl" "bbl")))
 #+END_SRC
+
+** Time tracking: Clocking
+I've recently discovered this feature and is awesome. It enables time tracking
+for tasks inside an agenda file.
+
+~C-c C-x C-i~ Starts the clock on the current time
+~C-c C-x C-o~ Stops the current active clock
+
+With this option all the =CLOCKS= will be grouped into a =:CLOCKING:= entry
+
+#+BEGIN_SRC emacs-lisp
+(setq org-clock-into-drawer t)
+#+END_SRC
+
 * Packages & Tools
 ** =ivy=
 =ivy= is a minimalistic completion engine.
