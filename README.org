@@ -481,7 +481,9 @@ With this option all the =CLOCKS= will be grouped into a =:CLOCKING:= entry
 
 * Packages & Tools
 ** =ivy=
-=ivy= is a minimalistic completion engine.
+=ivy= is a minimalistic completion engine. It supports fuzzy matching. But I
+don't like this behaviour on =swiper= search engine. So, I deactivated setting
+the default regexp builder with ~(swiper . ivy--regex-plus)~.
 
 #+BEGIN_SRC emacs-lisp
 (use-package ivy
@@ -498,10 +500,13 @@ With this option all the =CLOCKS= will be grouped into a =:CLOCKING:= entry
 
   ; Fuzzy mode
   (setq ivy-re-builders-alist
-		'((t . ivy--regex-fuzzy)))
+		'((swiper . ivy--regex-plus) ; No Fuzzy matchin for swiper
+		  (t      . ivy--regex-fuzzy)))
+
   (setq ivy-initial-inputs-alist nil)
 
-  :bind (:map ivy-minibuffer-map
+  :bind (("C-s" . swiper)
+		 :map ivy-minibuffer-map
 		 ("RET" . ivy-alt-done)
 		 ("C-j" . ivy-next-line)
 		 ("C-k" . ivy-previous-line))) 
