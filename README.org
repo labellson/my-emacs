@@ -110,6 +110,78 @@ with =company-capf= backend.
       (company-flx-mode +1)))
 #+END_SRC
    
+** C/C++
+I've been using *NeoVim* with =YouCompleteMe= for C/C++ development. But, I
+want to change my default text editor to emacs. So, this section sums up my
+research on C/C++ related emacs packages.
+
+** COMMENT =Irony-mode=
+Is an emacs minor mode that indexes C/C++ code improving the editing
+experience and therefore offers some IDE-like functionality.
+
+It works by using a combination of an Emacs package and a C++ program
+=irony-server= exposing =libclang=. =Irony= installs and runs automatically the
+=irony-server=. So, is easy to configure.
+
+=Irony= does not know how to work with header files, because compilation
+database provides compilation information for source files but not for
+headers. But luckily, =irony= has fallback options. So, lets use
+=.clang_complete= file as a fallback option for headers files.
+
+#+BEGIN_SRC emacs-lisp
+(use-package irony
+  :ensure t
+  :config
+
+  ;; Use compilation database first, clang_complete as fallback.
+  (setq-default irony-cdb-compilation-databases '(irony-cdb-libclang
+                                                      irony-cdb-clang-complete))
+
+  (add-hook 'c++-mode-hook 'irony-mode)
+  (add-hook 'c-mode-hook 'irony-mode)
+  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
+#+END_SRC
+
+To enable code completion with company let's install the backend.
+
+#+BEGIN_SRC emacs-lisp
+(use-package company-irony
+  :requires (company irony)
+  :ensure t
+  :config
+
+  (use-package company-irony-c-headers
+	:requires (company irony)
+	:ensure t)
+  
+  (eval-after-load 'company
+	'(add-to-list 'company-backends '(company-irony-c-headers company-irony))))
+#+END_SRC
+
+For live code checking =flycheck-irony= must be installed.
+
+#+BEGIN_SRC emacs-lisp
+(use-package flycheck-irony
+  :requires (flycheck irony)
+  :ensure t
+  :config
+
+  (eval-after-load 'flycheck
+	'(add-hook 'flycheck-mode-hook #'flycheck-irony-setup)))
+#+END_SRC
+
+For =eldoc= integration with irony. =eldoc= will show the argument list of the
+function you are currently writing.
+
+#+BEGIN_SRC emacs-lisp
+(use-package irony-eldoc
+  :requires (eldoc irony)
+  :ensure t
+  :config
+
+  (add-hook 'irony-mode-hook #'irony-eldoc))
+#+END_SRC
+
 ** Python
 In order to use ipython as default interpreter set these lines below.
 
