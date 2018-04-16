@@ -543,6 +543,19 @@ enhances the emacs user experience ;)
   :delight)
 #+END_SRC
 
+** =flycheck=
+=Flycheck= brings on-the-fly syntax checking for different languages. It comes
+already with support for a lot of languages and can also use other packages as
+backend.
+
+#+BEGIN_SRC emacs-lisp
+(use-package flycheck
+  :ensure t
+  :config
+  (add-hook 'prog-mode-hook #'flycheck-mode)
+  (set-face-underline 'flycheck-error '(:color "Red1" :style line)))
+#+END_SRC
+
 ** PDF Tools
 #+BEGIN_SRC emacs-lisp
 (use-package pdf-tools
