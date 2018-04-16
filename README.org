@@ -110,6 +110,60 @@ with =company-capf= backend.
       (company-flx-mode +1)))
 #+END_SRC
    
+** C/C++
+I've been using *NeoVim* with =YouCompleteMe= for C/C++ development. But, I
+want to change my default text editor to emacs. So, this section sums up my
+research on C/C++ related emacs packages. 
+
+** =emacs-ycmd=
+I've been testing =rtags= and =irony= modes, but I could not properly
+configurate. But, I've seen there's a client for =ycmd= on emacs too.
+
+=emacs-ycmd= is an emacs mode that takes care of managing a ycmd server and
+fetching completions from that server for offer some IDE-like functionality for
+C/C++.
+
+In order to use this package the [[https://github.com/Valloric/ycmd][ycmd]] server must be compiled. For C/C++
+completion: ~./build.py --clang-completion~.
+
+#+BEGIN_SRC emacs-lisp
+(use-package ycmd
+  :ensure t
+  :config
+
+  (set-variable 'ycmd-server-command `("python3",
+									   (file-truename "~/.ycmd/ycmd")))
+  (set-variable 'ycmd-global-config (expand-file-name "~/.ycmd/.ycm_extra_conf.py"))
+
+  (add-hook 'c++-mode-hook #'ycmd-mode)
+  (add-hook 'ycmd-mode-hook 'ycmd-eldoc-setup))
+#+END_SRC
+
+To enable code completion with company install the backend.
+
+#+BEGIN_SRC emacs-lisp
+(use-package company-ycmd
+  :ensure t
+  :config
+
+  (company-ycmd-setup)
+
+  (eval-after-load 'company
+	'(add-to-list 'company-backends 'company-ycmd)))
+#+END_SRC
+
+For live code checking =flycheck-ycmd= must be installed.
+
+#+BEGIN_SRC emacs-lisp
+(use-package flycheck-ycmd
+  :ensure t
+  :config
+
+  (flycheck-ycmd-setup)
+
+  (add-hook 'ycmd-mode-hook 'flycheck-ycmd-setup))
+#+END_SRC
+
 ** Python
 In order to use ipython as default interpreter set these lines below.
 
@@ -160,6 +214,7 @@ if you want autocompletion.
   :ensure t
   :delight
   :config
+
     (eval-after-load "company"
       '(add-to-list 'company-backends '(company-anaconda :with company-capf))))
 #+END_SRC
