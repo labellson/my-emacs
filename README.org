@@ -90,6 +90,7 @@ Add =company-tng-frontend= if you like YCM Vim completion :P
       '(progn
         (add-hook 'prog-mode-hook 'company-mode)
         (add-to-list 'company-frontends 'company-tng-frontend)
+
         (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
         (define-key company-active-map [tab] 'company-complete-common-or-cycle)
         (define-key company-active-map (kbd "S-TAB") 'company-select-previous)
@@ -110,6 +111,81 @@ with =company-capf= backend.
       (company-flx-mode +1)))
 #+END_SRC
    
+** C/C++
+I've been using *NeoVim* with =YouCompleteMe= for C/C++ development. But, I
+want to change my default text editor to emacs. So, this section sums up my
+research on C/C++ related emacs packages.
+
+*** =RTags=
+Is a client/server application that indexes C/C++ code. What it does is it
+actually understands your C++ project and therefore offers some IDE-like
+functionality for emacs.
+
+RTags consist of =rc= the client, =rdm= the daemon that does indexing and emacs
+=rtags= package that interacts with =rc=. In order to install =rc= and =rdm= it
+can be done automatically by running ~rtags-install~. Or, manually as [[https://github.com/Andersbakken/rtags][RTags]]
+GitHub repository explains.
+
+#+BEGIN_SRC emacs-lisp
+(use-package rtags
+  :ensure t
+  :config
+
+  (progn
+	(unless (rtags-executable-find "rc") (error "Binary rc is not installed!"))
+	(unless (rtags-executable-find "rdm") (error "Binary rdm is not installed!")))
+
+  (add-hook 'c-mode-hook 'rtags-start-process-unless-running)
+  (add-hook 'c++-mode-hook 'rtags-start-process-unless-running)
+  (add-hook 'kill-emacs-hook 'rtags-quit-rdm)
+
+  :bind (:map c-mode-base-map
+			  ("M-." . rtags-find-symbol-at-point)
+			  ("M-," . rtags-find-references-at-point)
+			  ("M-?" . rtags-display-summary)))
+#+END_SRC
+
+To enable code completion with company let's install the backend.
+
+#+BEGIN_SRC emacs-lisp
+(use-package company-rtags
+  :requires (company rtags)
+  :ensure t
+  :config
+
+  (setq rtags-autostart-diagnostics t)
+  (setq rtags-completions-enabled t)
+  (push 'company-rtags company-backends))
+#+END_SRC
+
+=RTags= can use =Ivy= to view some results to do so just need install
+=ivy-tags= and set the display backend to =ivy= with ~rtags-display-result-backend~.
+
+#+BEGIN_SRC emacs-lisp
+(use-package ivy-rtags
+  :requires (ivy rtags)
+  :ensure t
+  :config
+  (setq rtags-display-result-backend 'ivy))
+#+END_SRC
+
+For live code checking =flycheck-rtags= must be installed.
+
+#+BEGIN_SRC emacs-lisp
+(use-package flycheck-rtags
+  :requires (flycheck rtags)
+  :ensure t
+  :config
+
+  (defun my-flycheck-rtags-setup ()
+	(flycheck-select-checker 'rtags)
+	(setq-local flycheck-highlighting-mode nil) ;; RTags creates more accurate overlays.
+	(setq-local flycheck-check-syntax-automatically nil))
+
+	(add-hook 'c-mode-hook #'my-flycheck-rtags-setup)
+	(add-hook 'c++-mode-hook #'my-flycheck-rtags-setup))
+#+END_SRC
+
 ** Python
 In order to use ipython as default interpreter set these lines below.
 
