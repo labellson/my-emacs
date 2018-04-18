@@ -598,6 +598,31 @@ enhances the emacs user experience ;)
   :delight)
 #+END_SRC
 
+** =projectile=
+Enables different tools and functions to deal with files related to a
+project. It works out of the box, since it will detect your *VCS* files
+automatically and set it as the root of the project. If it doesn't, you can
+just create an empty =.projectile= file in the root of your project.
+
+I have it configured to ignore all files that has not been staged in the
+project.
+
+#+BEGIN_SRC emacs-lisp
+(use-package projectile
+  :ensure t
+  :config
+
+  (projectile-global-mode t)
+  (setq projectile-use-git-grep t))
+#+END_SRC
+
+Also, the =counsel-projectile= extension adds integration with =ivy=.
+
+#+BEGIN_SRC emacs-lisp
+(use-package counsel-projectile
+  :ensure t
+  :config (counsel-projectile-mode t))
+#+END_SRC
 ** =flycheck=
 =Flycheck= brings on-the-fly syntax checking for different languages. It comes
 already with support for a lot of languages and can also use other packages as
