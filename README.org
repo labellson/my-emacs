@@ -636,6 +636,17 @@ backend.
   (set-face-underline 'flycheck-error '(:color "Red1" :style line)))
 #+END_SRC
 
+** =smartparens=
+Auto-close parenthesis and other characters. Very useful in =prog-mode=.
+
+#+BEGIN_SRC emacs-lisp
+(use-package smartparens
+  :ensure t
+  :config
+
+  (add-hook 'prog-mode-hook #'smartparens-mode)
+  (sp-pair "{" nil :post-handlers '(("||\n[i]" "RET"))))
+#+END_SRC
 ** PDF Tools
 #+BEGIN_SRC emacs-lisp
 (use-package pdf-tools
