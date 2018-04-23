@@ -70,6 +70,16 @@ I prefer to have a scratch buffer ready when booting up with =org-mode= running
 	  initial-major-mode 'org-mode)
 #+END_SRC
 
+** Disable the warning when killing a buffer with process
+When a buffer has an associated process, Emacs will prompt you when trying to
+kill it asking for confirmation. I preferred to disable this behaviour.
+
+#+BEGIN_SRC emacs-lisp
+(setq kill-buffer-query-functions
+	  (remq 'process-kill-buffer-query-function
+			 kill-buffer-query-functions))
+#+END_SRC
+
 ** Set the backups folder
 Backups are always fancy. But emacs, blows up all my project folders with
 swarms of =#foo#= files. That's why I set them to a backup folder and stop them
