@@ -61,6 +61,15 @@ type.
 (fset 'yes-or-no-p 'y-or-no-p)
 #+END_SRC
 
+** Disabling the default startup message
+I prefer to have a scratch buffer ready when booting up with =org-mode= running
+
+#+BEGIN_SRC emacs-lisp
+(setq inhibit-splash-screen t
+	  initial-scratch-message nil
+	  initial-major-mode 'org-mode)
+#+END_SRC
+
 ** Set the backups folder
 Backups are always fancy. But emacs, blows up all my project folders with
 swarms of =#foo#= files. That's why I set them to a backup folder and stop them
