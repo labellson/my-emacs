@@ -58,7 +58,7 @@ you to write =yes= and the other one only to press =y=, so I disable the first
 type.
 
 #+BEGIN_SRC emacs-lisp
-(fset 'yes-or-no-p 'y-or-no-p)
+(fset 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
 
 ** Disabling the default startup message
