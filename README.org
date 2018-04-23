@@ -107,6 +107,18 @@ from polluting everywhere.
 	  kept-old-versions 5)
 #+END_SRC
 
+** Auto-fill comments
+For our comments (only comments, not code) to be automatically filled in
+programming modes, we can use this function:
+
+#+BEGIN_SRC emacs-lisp
+(defun comment-auto-fill ()
+  (setq-local comment-auto-fill-only-comments t)
+  (auto-fill-mode 1))
+
+(add-hook 'prog-mode-hook 'comment-auto-fill)
+#+END_SRC
+
 * Emacs GUI
 ** =delight= to manage mode names in the mode-line
 This package let us rename or hide mode names in the mode-line. It's fully
