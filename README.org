@@ -540,15 +540,6 @@ By default =TAB= keystroke doesn't indent in =org= source blocks. Typing
 (setq org-src-tab-acts-natively t)
 #+END_SRC
 
-** Open source blocks in the same window
-When editing source code in an org source block, we can open a new buffer to
-edit the code in its major mode. This option makes it use the same window
-instead of popping a new one.
-
-#+BEGIN_SRC emacs-lisp
-(setq org-src-window-setup 'current-window)
-#+END_SRC
-
 ** Use syntax highlight in source blocks
 When writing source code on a block, if this variable is enabled it will use
 the same syntax highlight as the mode supposed to deal with it.
