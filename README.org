@@ -52,6 +52,15 @@ but I don't like the default widht. So...
 (setq-default tab-width 4)
 #+END_SRC
 
+** Disable =yes-or-no= messages
+There are different types of confirmation prompts in Emacs. One of them forces
+you to write =yes= and the other one only to press =y=, so I disable the first
+type.
+
+#+BEGIN_SRC emacs-lisp
+(fset 'yes-or-no-p 'y-or-no-p)
+#+END_SRC
+
 ** Set the backups folder
 Backups are always fancy. But emacs, blows up all my project folders with
 swarms of =#foo#= files. That's why I set them to a backup folder and stop them
