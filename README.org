@@ -52,6 +52,20 @@ but I don't like the default widht. So...
 (setq-default tab-width 4)
 #+END_SRC
 
+** Set the backups folder
+Backups are always fancy. But emacs, blows up all my project folders with
+swarms of =#foo#= files. That's why I set them to a backup folder and stop them
+from polluting everywhere.
+
+#+BEGIN_SRC emacs-lisp
+(setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
+	  backup-by-copying t
+	  version-control t
+	  delete-old-versions t
+	  kept-new-versions 20
+	  kept-old-versions 5)
+#+END_SRC
+
 * Emacs GUI
 ** =delight= to manage mode names in the mode-line
 This package let us rename or hide mode names in the mode-line. It's fully
