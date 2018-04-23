@@ -581,6 +581,23 @@ With this option all the =CLOCKS= will be grouped into a =:CLOCKING:= entry
 #+END_SRC
 
 * Packages & Tools
+** Move buffers around
+There's no fast way to swap buffers location in Emacs by default. To do it, a
+good option is to use =buffer-move= package and use these key bindings.
+
+#+BEGIN_SRC emacs-lisp
+(use-package buffer-move
+  :ensure t
+  :bind (("C-x w <up>"    . buf-move-up)
+		 ("C-x w <down>"  . buf-move-down)
+		 ("C-x w <left>"  . buf-move-left)
+		 ("C-x w <right>" . buf-move-right)
+		 ("C-x w k"       . buf-move-up)
+		 ("C-x w j"       . buf-move-down)
+		 ("C-x w h"       . buf-move-left)
+		 ("C-x w l"       . buf-move-right)))
+#+END_SRC
+
 ** =ivy=
 =ivy= is a minimalistic completion engine. It supports fuzzy matching. But I
 don't like this behaviour on =swiper= search engine. So, I deactivated setting
