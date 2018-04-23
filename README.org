@@ -80,6 +80,19 @@ kill it asking for confirmation. I preferred to disable this behaviour.
 			 kill-buffer-query-functions))
 #+END_SRC
 
+** Fix scroll
+Setting this values will force one-line scrolling everywhere (mouse and
+keyboard), resulting most of the times in a smoother scrolling than the actual
+smooth scolling.
+
+#+BEGIN_SRC emacs-lisp
+(setq scroll-step            1
+      scroll-conservatively  10000
+	  mouse-wheel-scroll-amount '(1 ((shift) . 1))
+      mouse-wheel-progressive-speed nil
+      mouse-wheel-follow-mouse 't)
+#+END_SRC
+
 ** Set the backups folder
 Backups are always fancy. But emacs, blows up all my project folders with
 swarms of =#foo#= files. That's why I set them to a backup folder and stop them
