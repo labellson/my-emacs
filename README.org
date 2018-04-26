@@ -159,6 +159,28 @@ DELTA should be a multiple of 10, in the units used by the
 (global-set-key (kbd "C-M--") 'decrease-default-font-height)
 #+END_SRC
 
+** Add functions to determine system 
+One liner functions to know in which system we are running.
+
+#+BEGIN_SRC emacs-lisp
+(defun system-is-mac ()
+  (interactive)
+  (string-equal system-type "darwin"))
+
+(defun system-is-linux ()
+  (interactive)
+  (string-equal system-type "gnu/linux"))
+
+(defun system-is-chip ()
+  (interactive)
+  (string-equal system-name "chip"))
+
+(defun system-is-windows ()
+  (interactive)
+  (or (string-equal system-name "windows-nt")
+	  (string-equal system-name "cygwin")))
+#+END_SRC
+
 * Emacs GUI
 ** =delight= to manage mode names in the mode-line
 This package let us rename or hide mode names in the mode-line. It's fully
