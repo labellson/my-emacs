@@ -202,6 +202,13 @@ to define a new keybinding that automatically reloads that buffer.
 (global-set-key (kbd "C-c c o") 'open-emacs-configuration)
 #+END_SRC
 
+** Scroll in the compilation buffer
+It's really annoying to not have the last part of the output in the screen when
+compiling. This automatically scrolls the buffer for you as the output is printed.
+
+#+BEGIN_SRC emacs-lisp
+(setq compilation-scroll-output t)
+#+END_SRC
 * Emacs GUI
 ** =delight= to manage mode names in the mode-line
 This package let us rename or hide mode names in the mode-line. It's fully
