@@ -236,6 +236,19 @@ Emacs provides some minor modes that I want to hide as well.
   (visual-line-mode))
 #+END_SRC
 
+** Highlight changed and uncommited lines
+Use the =git-gutter-fringe= package for that. I have it activated for
+=prog-mode= and =org-mode=.
+
+#+BEGIN_SRC emacs-lisp
+(use-package git-gutter-fringe
+  :ensure t
+  :config
+
+  (add-hook 'prog-mode-hook 'git-gutter-mode)
+  (add-hook 'org-mode-hook  'git-gutter-mode))
+#+END_SRC
+
 * Programming Modes
 ** =company=
 [[http://company-mode.github.io/][Company]] is a text completion framework for Emacs. The name stands for "complete
