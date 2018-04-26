@@ -181,6 +181,27 @@ One liner functions to know in which system we are running.
 	  (string-equal system-name "cygwin")))
 #+END_SRC
 
+** Define keybindings to =eval-buffer= on init and open =README.org=
+Really loving this emacs =org-mode= configuration. It was easier to reload the
+configuration on the fly: ~M-x eval-buffer RET~. However the buffer to evalute
+is not this one, but =.emacs.d/init.el=. That's whu it's probably a better idea
+to define a new keybinding that automatically reloads that buffer.
+
+#+BEGIN_SRC emacs-lisp
+(defun reload-emacs-configuration ()
+  "Reload the configuration"
+  (interactive)
+  (load "~/.emacs.d/init.el"))
+
+(defun open-emacs-configuration ()
+  "Open the configuration.org file in buffer"
+  (interactive)
+  (find-file "~/.my-emacs/README.org"))
+
+(global-set-key (kbd "C-c c r") 'reload-emacs-configuration)
+(global-set-key (kbd "C-c c o") 'open-emacs-configuration)
+#+END_SRC
+
 * Emacs GUI
 ** =delight= to manage mode names in the mode-line
 This package let us rename or hide mode names in the mode-line. It's fully
