@@ -209,6 +209,13 @@ compiling. This automatically scrolls the buffer for you as the output is printe
 #+BEGIN_SRC emacs-lisp
 (setq compilation-scroll-output t)
 #+END_SRC
+
+** Add other keybindings
+In this section goes all these keybindings that don't really fit anywhere else.
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-c b") 'bookmark-jump)
+#+END_SRC
 * Emacs GUI
 ** =delight= to manage mode names in the mode-line
 This package let us rename or hide mode names in the mode-line. It's fully
