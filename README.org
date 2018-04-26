@@ -249,6 +249,41 @@ Use the =git-gutter-fringe= package for that. I have it activated for
   (add-hook 'org-mode-hook  'git-gutter-mode))
 #+END_SRC
 
+** Mode-line configuration
+These two packages developed by [[https://github.com/tarsius][Jonas Bernoulli]], provide a beautiful and simple
+mode-line that shows all the information in a beautiful and minimalistic way.
+The general mode-lin aesthetics and distribution is provided by =moody=, while
+=minions= hide all the minor modes and provides an on-click menu to show
+them. So, I don't need anymore the delight package to hide all the actually
+active minor modes.
+
+#+BEGIN_SRC emacs-lisp
+(use-package minions
+  :ensure t
+  :config
+
+  (setq minions-mode-line-lighter "[+]")
+  (minions-mode))
+
+(use-package moody
+  :ensure t
+  :config
+
+  (setq x-underline-at-descent-line t
+		column-number-mode t)
+
+  (moody-replace-mode-line-buffer-identification)
+  (moody-replace-vc-mode)
+
+  (let ((line (face-attribute 'mode-line :underline)))
+    (set-face-attribute 'mode-line          nil :overline   line)
+    (set-face-attribute 'mode-line-inactive nil :overline   line)
+    (set-face-attribute 'mode-line-inactive nil :underline  line)
+    (set-face-attribute 'mode-line          nil :box        nil)
+    (set-face-attribute 'mode-line-inactive nil :box        nil)
+    (set-face-attribute 'mode-line-inactive nil :background "#f9f2d9")))
+#+END_SRC
+
 * Programming Modes
 ** =company=
 [[http://company-mode.github.io/][Company]] is a text completion framework for Emacs. The name stands for "complete
