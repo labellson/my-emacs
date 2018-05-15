@@ -737,6 +737,25 @@ With this option all the =CLOCKS= will be grouped into a =:CLOCKING:= entry
 (setq org-clock-into-drawer t)
 #+END_SRC
 
+** Turn table into =latex= subfigure
+=ox-latex-subfigure= do what the title says. So simple. This is an example of
+how it works.
+
+#+BEGIN_EXAMPLE
+,#+LATEX_HEADER: \usepackage{subcaption}
+,#+NAME: fig:hello
+,#+CAPTION: Use figure/subfigure instead of tabular, remember to set =:environment=
+,#+ATTR_LATEX: :environment subfigure :width 0.4\textwidth :align c
+| [[~/Desktop/figure_1.png]] | <<fig:hello_subfigure>> tttttt |
+| zzzzz                      | [[~/Desktop/figure_1.png]]     |
+#+END_EXAMPLE
+
+#+BEGIN_SRC emacs-lisp
+(use-package ox-latex-subfigure
+  :init
+  (setq org-latex-prefer-user-labels t)
+  :ensure t)
+#+END_SRC
 * Packages & Tools
 ** Move buffers around
 There's no fast way to swap buffers location in Emacs by default. To do it, a
