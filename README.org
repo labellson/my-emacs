@@ -446,6 +446,21 @@ if you want autocompletion.
       '(add-to-list 'company-backends '(company-anaconda :with company-capf))))
 #+END_SRC
 
+*** Package for Python docstrings
+This package adds some nice features like automatic creation of docstrings and
+highlighting in them. There is also another package for better highlight and
+indentation of the comments.
+
+#+BEGIN_SRC emacs-lisp
+(use-package sphinx-doc
+  :ensure t
+  :hook (python-mode . sphinx-doc-mode))
+
+(use-package python-docstring
+  :ensure t
+  :config (setq python-docstring-sentence-end-double-space nil)
+  :hook (python-mode . python-docstring-mode))
+#+END_SRC
 ** Javascript
 *** =js-2mode=
 Better [[https://emacs.cafe/emacs/javascript/setup/2017/04/23/emacs-setup-javascript.html][Javascript mode]].
@@ -459,7 +474,7 @@ Better [[https://emacs.cafe/emacs/javascript/setup/2017/04/23/emacs-setup-javasc
   (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
   (add-hook 'js2-mode-hook #'js2-imenu-extras-mode))
 #+END_SRC
-** COMMENT =hideshow=
+** =hideshow=
 This minor mode provides selectively folding for code and comment
 blocks. Blocks are defined per mayor mode. It cames pre-configured with default
 mayor modes like =c-mode, c++mode..=
