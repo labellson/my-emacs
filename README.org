@@ -461,6 +461,19 @@ indentation of the comments.
   :config (setq python-docstring-sentence-end-double-space nil)
   :hook (python-mode . python-docstring-mode))
 #+END_SRC
+
+*** Jupyter Notebook
+=EIN= provides a client for =IPython= and =Jupyter= notebooks inside
+emacs. This allows use all the emacs features inside the notebooks.
+
+#+BEGIN_SRC emacs-lisp
+(use-package ein
+  :ensure t
+  :hook (ein:notebook-multilang-mode
+		 . (lambda () (ws-butler-mode -1) (visual-line-mode)))
+  :custom-face
+  (ein:cell-input-area ((t (:background "#f9f2d9")))))
+#+END_SRC
 ** Javascript
 *** =js-2mode=
 Better [[https://emacs.cafe/emacs/javascript/setup/2017/04/23/emacs-setup-javascript.html][Javascript mode]].
