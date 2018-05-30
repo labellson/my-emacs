@@ -249,6 +249,21 @@ Use the =git-gutter-fringe= package for that. I have it activated for
   (add-hook 'org-mode-hook  'git-gutter-mode))
 #+END_SRC
 
+** Setting solarized theme
+I've been using =grubvox= dark theme for a long time on =vim= and in my firsts
+steps with =emacs=. But, I've always been in love with =solarized-light=. On my
+opinion, =solarized= doesn't looks pretty on =vim=. But looks sexy on =emacs=.
+
+#+BEGIN_SRC emacs-lisp
+(use-package solarized-theme
+  :ensure t
+  :init
+  (setq solarized-use-variable-pitch nil)
+  :config
+  (load-theme 'solarized-light t)
+  (set-face-attribute 'org-block nil :background "#f9f2d9"))
+#+END_SRC
+
 ** Mode-line configuration
 These two packages developed by [[https://github.com/tarsius][Jonas Bernoulli]], provide a beautiful and simple
 mode-line that shows all the information in a beautiful and minimalistic way.
@@ -525,9 +540,6 @@ These source blocks needs to be documented.
    :ensure t
    :config
    (global-evil-search-highlight-persist t)))
-
-(use-package gruvbox-theme
-  :ensure t)
 
 ; Smooth scrolling on file limits
 (use-package smooth-scrolling
