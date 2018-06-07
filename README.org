@@ -217,25 +217,6 @@ In this section goes all these keybindings that don't really fit anywhere else.
 (global-set-key (kbd "C-c b") 'bookmark-jump)
 #+END_SRC
 * Emacs GUI
-** =delight= to manage mode names in the mode-line
-This package let us rename or hide mode names in the mode-line. It's fully
-compatible with =use-package=.
-
-#+BEGIN_SRC emacs-lisp
-(use-package delight
-  :ensure t
-  :demand t)
-#+END_SRC
-
-Emacs provides some minor modes that I want to hide as well.
-
-#+BEGIN_SRC emacs-lisp
-(use-package emacs
-  :delight
-  (auto-revert-mode)
-  (visual-line-mode))
-#+END_SRC
-
 ** Highlight changed and uncommited lines
 Use the =git-gutter-fringe= package for that. I have it activated for
 =prog-mode= and =org-mode=.
@@ -309,7 +290,6 @@ Add =company-tng-frontend= if you like YCM Vim completion :P
 
 #+BEGIN_SRC emacs-lisp
 (use-package company
-  :delight
   :ensure t
   :config
     (setq company-tooltip-align-annotations t)
@@ -330,7 +310,6 @@ with =company-capf= backend.
 
 #+BEGIN_SRC emacs-lisp
 (use-package company-flx
-  :delight
   :ensure t
   :config
     (eval-after-load 'company
@@ -416,7 +395,6 @@ simple and it integrates with =company-mode=.
 #+BEGIN_SRC emacs-lisp
 (use-package anaconda-mode
   :ensure t
-  :delight
   :config
     (add-hook 'python-mode-hook 'anaconda-mode)
     (add-hook 'python-mode-hook 'anaconda-eldoc-mode))
@@ -439,7 +417,6 @@ if you want autocompletion.
 #+BEGIN_SRC emacs-lisp
 (use-package company-anaconda
   :ensure t
-  :delight
   :config
 
     (eval-after-load "company"
@@ -481,7 +458,6 @@ Better [[https://emacs.cafe/emacs/javascript/setup/2017/04/23/emacs-setup-javasc
 #+BEGIN_SRC emacs-lisp
 (use-package js2-mode
   :ensure t
-  :delight
   :config
 
   (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
@@ -498,7 +474,6 @@ this config. This [[https://emacs.stackexchange.com/questions/2884/the-old-how-t
 #+BEGIN_SRC emacs-lisp
 (use-package hideshow
   :ensure t
-  :delight
   :bind ("C-c h" . hs-toggle-hiding)
   :config
   (add-to-list 'hs-special-modes-alist
@@ -816,7 +791,6 @@ the default regexp builder with ~(swiper . ivy--regex-plus)~.
 (use-package ivy
   :ensure t
   :demand t
-  :delight t
   :config
 
   (ivy-mode) 
@@ -845,7 +819,6 @@ Also, this alternative package complement =ivy=
 (use-package ivy-rich
   :ensure t
   :demand t
-  :delight t
   :config
   (ivy-set-display-transformer 'ivy-switch-buffer
 							   'ivy-rich-switch-buffer-transformer))
@@ -857,8 +830,7 @@ enhances the emacs user experience ;)
 #+BEGIN_SRC emacs-lisp
 (use-package counsel
   :ensure t
-  :demand t
-  :delight) 
+  :demand t) 
 #+END_SRC
 
 =swiper= is an Ivy-enhanced alternative to isearch
@@ -866,8 +838,7 @@ enhances the emacs user experience ;)
 #+BEGIN_SRC emacs-lisp
 (use-package swiper
   :ensure t
-  :demand t
-  :delight)
+  :demand t)
 #+END_SRC
 
 ** =projectile=
