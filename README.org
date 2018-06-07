@@ -710,6 +710,18 @@ check [[https://github.com/joostkremers/visual-fill-column][visual-fill-column]]
 (add-hook 'org-mode-hook 'auto-fill-mode)
 (setq-default fill-column 79)
 #+END_SRC
+
+** =evil= integration with =org-mode=
+I'm very used to =Vim=, that's why I use =evil-mode=. But, it doesn't have a
+default integration with =org-mode=. That's where =evil-org= package helps defining some useful
+keybindings for a =Vim= key-map fan.
+
+#+BEGIN_SRC emacs-lisp
+(use-package evil-org
+  :ensure t
+  :hook (org-mode . evil-org-mode))
+#+END_SRC
+
 ** IEEE export
 For class assignments and who-knows-what in the future, I was able to integrate
 a IEEE Conference template in org-mode export via Latex. To use it, just
