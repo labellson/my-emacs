@@ -196,6 +196,10 @@ One liner functions to know in which system we are running.
 	  (string-equal system-name "cygwin")))
 #+END_SRC
 
+** Esc key as C-g
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+#+END_SRC
 ** Define keybindings to =eval-buffer= on init and open =README.org=
 Really loving this emacs =org-mode= configuration. It was easier to reload the
 configuration on the fly: ~M-x eval-buffer RET~. However the buffer to evalute
@@ -646,9 +650,6 @@ These source blocks needs to be moved to its corresponding sections.
   ;  (setq org-bullets-bullet-list
   ;        '("\u25c9" "\u25ce" "\u25cb" "\u25cb" "\u25cb" "\u25cb"))))
 
-
-;; Keyboard maps
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 #+END_SRC
 
 * Org-mode
