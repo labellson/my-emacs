@@ -232,6 +232,16 @@ In this section goes all these keybindings that don't really fit anywhere else.
 (global-set-key (kbd "C-c b") 'bookmark-jump)
 #+END_SRC
 * Emacs GUI
+** Disabling GUI bars
+The Emacs GUI client has this tools bars that I don't like too much. I prefer a
+clean layout with the simple mode-line and without a scroll-bar, as if it were
+Vim.
+
+#+BEGIN_SRC emacs-lisp
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+#+END_SRC
 ** Highlight changed and uncommited lines
 Use the =git-gutter-fringe= package for that. I have it activated for
 =prog-mode= and =org-mode=.
@@ -517,15 +527,8 @@ These source blocks needs to be documented.
 
 #+BEGIN_SRC emacs-lisp
 
-;; Hide the toolbar and menubar
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-
 ;; Don't create backups
 (setq make-backup-files nil)
-
-;; Disable scroll bar
-(scroll-bar-mode -1)
 
 ;; Load packages
 (use-package evil
