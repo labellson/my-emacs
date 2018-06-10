@@ -295,6 +295,14 @@ active minor modes.
     (set-face-attribute 'mode-line-inactive nil :background "#f9f2d9")))
 #+END_SRC
 
+** Highlight matching parenthesis
+As the title says, this mode highlight matching parenthesis under the cursor
+ 
+#+BEGIN_SRC emacs-lisp
+(setq show-paren-delay 0)
+(show-paren-mode 1)
+#+END_SRC
+
 * Programming Modes
 ** =company=
 [[http://company-mode.github.io/][Company]] is a text completion framework for Emacs. The name stands for "complete
@@ -508,11 +516,6 @@ this config. This [[https://emacs.stackexchange.com/questions/2884/the-old-how-t
 These source blocks needs to be documented.
 
 #+BEGIN_SRC emacs-lisp
-
-
-;; Show Parenthesis Mode
-(setq show-paren-delay 0)
-(show-paren-mode 1)
 
 ;; Hide the toolbar and menubar
 (tool-bar-mode -1)
