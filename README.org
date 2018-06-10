@@ -43,6 +43,21 @@ you are able to add more than one. *But make sure you are using HTTPS!!*.
 (package-initialize)
 #+END_SRC
 
+** Install ~use-package~
+Emacs has a built-in package manager that makes easy to install
+packages. =use-package= makes things easier though. As a consequence, I need to
+write less ~emacs-lisp~ code, and along with =org-mode=, it makes easier the
+maintenance of a configuration file.
+
+#+BEGIN_SRC emacs-lisp
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(eval-when-compile
+  (require 'use-package))
+#+END_SRC
+
 ** TAB
 =<TAB>= key run indentation in most of the major mode. Sometimes, I want to
 =<TAB>= behaves as inserting a tab character. I can do this typing =C-q-<TAB>=
@@ -493,15 +508,6 @@ this config. This [[https://emacs.stackexchange.com/questions/2884/the-old-how-t
 These source blocks needs to be documented.
 
 #+BEGIN_SRC emacs-lisp
-
-
-;; Install use-package if not installed
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
-(eval-when-compile
-  (require 'use-package))
 
 
 ;; Show Parenthesis Mode
