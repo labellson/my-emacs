@@ -523,38 +523,12 @@ this config. This [[https://emacs.stackexchange.com/questions/2884/the-old-how-t
 (add-hook 'python-mode-hook 'hs-minor-mode)
 #+END_SRC
 * WIP
-These source blocks needs to be documented.
+These source blocks needs to be moved to its corresponding sections.
 
 #+BEGIN_SRC emacs-lisp
-
 ;; Don't create backups
-(setq make-backup-files nil)
+;; (setq make-backup-files nil)
 
-;; Load packages
-(use-package evil
-  :ensure t
-  :config
-  (evil-mode 1)
-
-  ;; Evil key bindings
-  (define-key evil-motion-state-map "j" 'evil-next-visual-line)
-  (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
-
-  (use-package evil-leader
-    :ensure t
-    :config
-    (global-evil-leader-mode)
-
-    (evil-leader/set-leader "<SPC>")
-    (evil-leader/set-key
-      "x" 'counsel-M-x
-      "<SPC>" 'evil-search-highlight-persist-remove-all
-	  "i" 'counsel-imenu))
-
-  (use-package evil-search-highlight-persist
-   :ensure t
-   :config
-   (global-evil-search-highlight-persist t)))
 
 ; Smooth scrolling on file limits
 (use-package smooth-scrolling
@@ -672,14 +646,6 @@ These source blocks needs to be documented.
   ;  (setq org-bullets-bullet-list
   ;        '("\u25c9" "\u25ce" "\u25cb" "\u25cb" "\u25cb" "\u25cb"))))
 
-;; Add these evil keybindings in Emacs mode
-(evil-add-hjkl-bindings occur-mode-map 'emacs
-  (kbd "/")       'evil-search-forward
-  (kbd "n")       'evil-search-next
-  (kbd "N")       'evil-search-previous
-  (kbd "C-d")     'evil-scroll-down
-  (kbd "C-u")     'evil-scroll-up
-  (kbd "C-w C-w") 'other-window)
 
 ;; Keyboard maps
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -783,6 +749,50 @@ With this option all the =CLOCKS= will be grouped into a =:CLOCKING:= entry
 #+END_SRC
 
 * Packages & Tools
+** Evil mode
+I'm very used to =Vim= and prefer its keybindings over the Emacs
+ones. =Evil-mode= provides keybindings and emulates the main features of =Vim=.
+
+This configuration enables leader key function and highlihgt persistence on
+searches.
+   
+#+BEGIN_SRC emacs-lisp
+(use-package evil
+  :ensure t
+  :config
+
+  (evil-mode 1)
+
+  ;; Evil key bindings
+  (define-key evil-motion-state-map "j" 'evil-next-visual-line)
+  (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
+
+  (use-package evil-leader
+    :ensure t
+    :config
+    (global-evil-leader-mode)
+
+    (evil-leader/set-leader "<SPC>")
+    (evil-leader/set-key
+      "x" 'counsel-M-x
+      "<SPC>" 'evil-search-highlight-persist-remove-all
+	  "i" 'counsel-imenu))
+
+  (use-package evil-search-highlight-persist
+   :ensure t
+   :config
+   (global-evil-search-highlight-persist t))
+
+	;; Add these evil keybindings in Emacs mode
+	(evil-add-hjkl-bindings occur-mode-map 'emacs
+	(kbd "/")       'evil-search-forward
+	(kbd "n")       'evil-search-next
+	(kbd "N")       'evil-search-previous
+	(kbd "C-d")     'evil-scroll-down
+	(kbd "C-u")     'evil-scroll-up
+	(kbd "C-w C-w") 'other-window))
+#+END_SRC
+
 ** Move buffers around
 There's no fast way to swap buffers location in Emacs by default. To do it, a
 good option is to use =buffer-move= package and use these key bindings.
