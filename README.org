@@ -715,6 +715,12 @@ the box.
              t)
 #+END_SRC
 
+** Beamer export
+We need to manually enable the export to Beamer option
+
+#+BEGIN_SRC emacs-lisp
+(use-package ox-beamer)
+#+END_SRC
 ** Native =TAB= in source blocks
 By default =TAB= keystroke doesn't indent in =org= source blocks. Typing
 =C-q-<TAB>= I can force a native =TAB= but I prefer this option that makes
