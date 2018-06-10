@@ -533,18 +533,11 @@ These source blocks needs to be moved to its corresponding sections.
 ;; Don't create backups
 ;; (setq make-backup-files nil)
 
-
 ; Smooth scrolling on file limits
 (use-package smooth-scrolling
   :ensure t
   :config
   (smooth-scrolling-mode 1))
-
-; SimpleClip Super+C Super+X Super+V
-(use-package simpleclip
-  :ensure t
-  :config
-  (simpleclip-mode 1))
 
 (use-package fill-column-indicator
   :ensure t
@@ -919,6 +912,17 @@ Auto-close parenthesis and other characters. Very useful in =prog-mode=.
   (add-hook 'prog-mode-hook #'smartparens-mode)
   (sp-pair "{" nil :post-handlers '(("||\n[i]" "RET"))))
 #+END_SRC
+** Clipboard integration
+=simple-clip= enables clipboard system integration from emacs.
+   
+#+BEGIN_SRC emacs-lisp
+; SimpleClip Super+C Super+X Super+V
+(use-package simpleclip
+  :ensure t
+  :config
+  (simpleclip-mode 1))
+#+END_SRC
+
 ** PDF Tools
 #+BEGIN_SRC emacs-lisp
 (use-package pdf-tools
