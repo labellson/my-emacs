@@ -108,6 +108,12 @@ smooth scolling.
       mouse-wheel-follow-mouse 't)
 #+END_SRC
 
+** Wrap lines
+Setting this value, the lines will wrap in all buffers when collapsing.
+   
+#+BEGIN_SRC emacs-lisp
+(global-visual-line-mode t)
+#+END_SRC
 ** Set the backups folder
 Backups are always fancy. But emacs, blows up all my project folders with
 swarms of =#foo#= files. That's why I set them to a backup folder and stop them
@@ -532,9 +538,6 @@ These source blocks needs to be moved to its corresponding sections.
 #+BEGIN_SRC emacs-lisp
 ;; Don't create backups
 ;; (setq make-backup-files nil)
-
-;; Wrap lines
-(global-visual-line-mode 1)
 
 ;; Show margin line numbers
 (use-package nlinum
