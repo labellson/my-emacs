@@ -539,12 +539,6 @@ These source blocks needs to be moved to its corresponding sections.
 ;; Don't create backups
 ;; (setq make-backup-files nil)
 
-;; Spell checker
-(when (executable-find "hunspell")
-  (setq-default ispell-program-name "hunspell")
-  (setq ispell-dictionary "es_ES")
-  (setq ispell-really-hunspell t))
-
 ;; Word Count
 (use-package wc-mode
   :ensure t
@@ -790,6 +784,28 @@ This setting enables the margin line numbers with the relative number mode.
   :ensure t
   :config
   (zlc-mode t))
+#+END_SRC
+** Spell checking
+Emacs comes with =ispell= a very useful spell checker if you use emacs to write
+notes or documents as I do. =ispell= needs a completion tool to review the
+text. I've installed  =hunspell= in my Arch Linux laptop.
+
+I set spanish as default language for spell checking because is my native
+language. But, I can use =M-x ispell-change-dictionary= if I want to change the
+spell checking language.
+
+The last two lines prevents =ispell= to check inside =org= source blocks and
+sections.
+   
+#+BEGIN_SRC emacs-lisp
+;; Spell checker
+(when (executable-find "hunspell")
+  (setq-default ispell-program-name "hunspell")
+  (setq ispell-dictionary "es_ES")
+  (setq ispell-really-hunspell t))
+
+(add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
+(add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
 #+END_SRC
 ** =ivy=
 =ivy= is a minimalistic completion engine. It supports fuzzy matching. But I
