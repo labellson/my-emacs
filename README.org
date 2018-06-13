@@ -539,12 +539,6 @@ These source blocks needs to be moved to its corresponding sections.
 ;; Don't create backups
 ;; (setq make-backup-files nil)
 
-;; Zsh Tab completion for minibuffer
-(use-package zlc
-  :ensure t
-  :config
-  (zlc-mode t))
-
 ;; Spell checker
 (when (executable-find "hunspell")
   (setq-default ispell-program-name "hunspell")
@@ -786,6 +780,16 @@ This setting enables the margin line numbers with the relative number mode.
 
   (nlinum-relative-setup-evil)
   (setq nlinum-relative-redisplay-delay 0))
+#+END_SRC
+** Zsh like completion
+=zlc= provides Zsh like completion for the default minibuffer.
+
+#+BEGIN_SRC emacs-lisp
+;; Zsh Tab completion for minibuffer
+(use-package zlc
+  :ensure t
+  :config
+  (zlc-mode t))
 #+END_SRC
 ** =ivy=
 =ivy= is a minimalistic completion engine. It supports fuzzy matching. But I
