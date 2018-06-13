@@ -539,26 +539,6 @@ These source blocks needs to be moved to its corresponding sections.
 ;; Don't create backups
 ;; (setq make-backup-files nil)
 
-;; Show margin line numbers
-(use-package nlinum
-  :ensure t
-  :config
-
-  ;(global-nlinum-mode t)
-
-  (use-package nlinum-relative
-    :ensure t
-    :config
-   ;; something else you want
-    (nlinum-relative-setup-evil)
-    (setq nlinum-relative-redisplay-delay 0)
-    (add-hook 'prog-mode-hook 'nlinum-relative-mode)))
-
-(use-package linum-off
-  :ensure t
-  ;(setq linum-disabled-modes-list ‘(eshell-mode wl-summary-mode compilation-mode))
-)
-
 ;; Zsh Tab completion for minibuffer
 (use-package zlc
   :ensure t
@@ -795,6 +775,18 @@ good option is to use =buffer-move= package and use these key bindings.
 		 ("C-x w l"       . buf-move-right)))
 #+END_SRC
 
+** Relative margin line numbers
+This setting enables the margin line numbers with the relative number mode.
+ 
+#+BEGIN_SRC emacs-lisp
+(use-package nlinum-relative
+  :ensure t
+  :hook (prog-mode . nlinum-relative-mode)
+  :config
+
+  (nlinum-relative-setup-evil)
+  (setq nlinum-relative-redisplay-delay 0))
+#+END_SRC
 ** =ivy=
 =ivy= is a minimalistic completion engine. It supports fuzzy matching. But I
 don't like this behaviour on =swiper= search engine. So, I deactivated setting
