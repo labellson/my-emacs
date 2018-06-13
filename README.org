@@ -539,11 +539,6 @@ These source blocks needs to be moved to its corresponding sections.
 ;; Don't create backups
 ;; (setq make-backup-files nil)
 
-;; Word Count
-(use-package wc-mode
-  :ensure t
-  :config)
-
 ;; org-mode
 
 ;; Folding character
