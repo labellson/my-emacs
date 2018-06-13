@@ -533,12 +533,6 @@ These source blocks needs to be moved to its corresponding sections.
 ;; Don't create backups
 ;; (setq make-backup-files nil)
 
-; Smooth scrolling on file limits
-(use-package smooth-scrolling
-  :ensure t
-  :config
-  (smooth-scrolling-mode 1))
-
 (use-package fill-column-indicator
   :ensure t
   :config
@@ -911,6 +905,18 @@ Auto-close parenthesis and other characters. Very useful in =prog-mode=.
 
   (add-hook 'prog-mode-hook #'smartparens-mode)
   (sp-pair "{" nil :post-handlers '(("||\n[i]" "RET"))))
+#+END_SRC
+** Smooth scrolling
+This package keeps the cursor away from the top and bottom of the current
+buffer's window in order to keep lines of context around the point visible as
+much as possible.
+
+#+BEGIN_SRC emacs-lisp
+; Smooth scrolling on file limits
+(use-package smooth-scrolling
+  :ensure t
+  :config
+  (smooth-scrolling-mode 1))
 #+END_SRC
 ** Clipboard integration
 =simple-clip= enables clipboard system integration from emacs.
