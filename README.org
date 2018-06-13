@@ -533,12 +533,6 @@ These source blocks needs to be moved to its corresponding sections.
 ;; Don't create backups
 ;; (setq make-backup-files nil)
 
-(use-package fill-column-indicator
-  :ensure t
-  :config
-  ;(fci-mode)           ;activate fill-column-indicator. use lambda hook
-  (set-fill-column 80))
-
 ;; Wrap lines
 (global-visual-line-mode 1)
 
