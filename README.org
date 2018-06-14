@@ -542,9 +542,6 @@ These source blocks needs to be moved to its corresponding sections.
 ;; org-mode
 
 
-;; Prettify latex symbols
-(setq-default org-pretty-entities t)
-
 (use-package org-ref
   :ensure t
   :config
@@ -659,6 +656,14 @@ Custom ellipsis to use in the =org-mode= heading outline.
    
 #+BEGIN_SRC emacs-lisp
 (setq org-ellipsis " \u2935")
+#+END_SRC
+** Prettify symbols
+This setting will prettify latex symbols like (~x_{subscript}~) and
+superscripts (~x^{superscript}~). As a consequence, they will appear in =org=
+as visual symbols.
+   
+#+BEGIN_SRC emacs-lisp
+(setq-default org-pretty-entities t)
 #+END_SRC
 ** Use syntax highlight in source blocks
 When writing source code on a block, if this variable is enabled it will use
