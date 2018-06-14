@@ -541,8 +541,6 @@ These source blocks needs to be moved to its corresponding sections.
 
 ;; org-mode
 
-;; Folding character
-(setq org-ellipsis " \u2935")
 
 ;; Prettify latex symbols
 (setq-default org-pretty-entities t)
@@ -656,6 +654,12 @@ By default =TAB= keystroke doesn't indent in =org= source blocks. Typing
 (setq org-src-tab-acts-natively t)
 #+END_SRC
 
+** Custom ellipsis
+Custom ellipsis to use in the =org-mode= heading outline.
+   
+#+BEGIN_SRC emacs-lisp
+(setq org-ellipsis " \u2935")
+#+END_SRC
 ** Use syntax highlight in source blocks
 When writing source code on a block, if this variable is enabled it will use
 the same syntax highlight as the mode supposed to deal with it.
