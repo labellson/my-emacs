@@ -581,9 +581,6 @@ These source blocks needs to be moved to its corresponding sections.
   :ensure t
   :config (add-hook 'org-mode-hook (lambda () (org-autolist-mode))))
 
-;; Set the agenda files
-(setq org-agenda-files (list "~/Drive/org/agenda.org"))
-
 (use-package org-bullets
   :ensure t)
   ;:config
@@ -596,7 +593,7 @@ These source blocks needs to be moved to its corresponding sections.
 
 * Org-mode
 ** Enable =auto-fill-mode=
-This conf enables 80 characters auto filling per line inside =org-mode=. I
+   This conf enables 80 characters auto filling per line inside =org-mode=. I
 believe that 80 character per line enhances the readability of a text file.
 
 If you want a visual behaviour inside =emacs= instead into the raw text file
@@ -605,6 +602,78 @@ check [[https://github.com/joostkremers/visual-fill-column][visual-fill-column]]
 #+BEGIN_SRC emacs-lisp
 (add-hook 'org-mode-hook 'auto-fill-mode)
 (setq-default fill-column 79)
+#+END_SRC
+
+** Setting up the agenda
+I'm triying to use the =org= agenda in order to organize all my workflow
+tasks. So in this section there are some agenda useful configurations.
+
+First, I'm defining where are my agenda files. I like to have it synced with
+Google Drive, in order to have always ready a back up. Also =org= can handle
+multiple agenda files, so you can add more files or folder to the list.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-agenda-files (list "~/Drive/org/agenda.org"))
+#+END_SRC
+
+As I said, I'm planning keep track of my tasks on the agenda. Thus I need to
+add some workflow states to the default *TODO* | *DONE* defined on Emacs
+
+#+BEGIN_SRC emacs-lisp
+(setq org-todo-keywords
+	  '((sequence "TODO" "IN-PROGRESS" "WAITING" "|" "DONE" "CANCELED")))
+#+END_SRC
+
+Also setting this keybinding allows me take quick looks to the agenda.
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-c t a") 'org-agenda-list)
+#+END_SRC   
+
+In order to add items to the agenda from anywhere in Emacs, we need to use
+=org-capture=. When you call it, a split will prompt asking you to select a
+template to use in order to add the task. By default, there are not templates,
+so lets define one along with a keybinging to call it.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-capture-templates
+	  '(("a" "My TODO task format." entry
+		 (file "todo.org")
+		 "* TODO %?
+SCHEDULED: %t")))
+
+(defun my-org-task-capture ()
+  "Capture a task with my default template."
+  (interactive)
+  (org-capture nil "a"))
+
+(global-set-key (kbd "C-c c c") 'my-org-task-capture)
+#+END_SRC
+
+Below these lines there are some tweaks that I've found for the agenda.
+
+Performing a text search ("s" selection from =org-agenda=) include all the text
+from the file list in =org= agenda.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-agenda-text-search-extra-files '(agenda-archives))
+#+END_SRC
+
+This option force you to mark all child tasks as *DONE* before you can mark the
+parent as *DONE*.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-enforce-todo-dependencies t)
+#+END_SRC
+
+This one insert a timestamp on the task when it was marked as done. Very useful
+in order to maintain a log of when the tasks are done. Also the same idea, but
+for logging how many the times a deadline or an scheduled date was changed.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-log-done (quote time))
+(setq org-log-redeadline (quote time))
+(setq org-log-reschedule (quote time))
 #+END_SRC
 
 ** =evil= integration with =org-mode=
@@ -616,6 +685,14 @@ keybindings for a =Vim= key-map fan.
 (use-package evil-org
   :ensure t
   :hook (org-mode . evil-org-mode))
+#+END_SRC
+** Native =TAB= in source blocks
+By default =TAB= keystroke doesn't indent in =org= source blocks. Typing
+=C-q-<TAB>= I can force a native =TAB= but I prefer this option that makes
+=TAB= work as if the keystroke was issued in the code’s major mode.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-src-tab-acts-natively t)
 #+END_SRC
 
 ** IEEE export
@@ -641,14 +718,6 @@ We need to manually enable the export to Beamer option
 
 #+BEGIN_SRC emacs-lisp
 (use-package ox-beamer)
-#+END_SRC
-** Native =TAB= in source blocks
-By default =TAB= keystroke doesn't indent in =org= source blocks. Typing
-=C-q-<TAB>= I can force a native =TAB= but I prefer this option that makes
-=TAB= work as if the keystroke was issued in the code’s major mode.
-
-#+BEGIN_SRC emacs-lisp
-(setq org-src-tab-acts-natively t)
 #+END_SRC
 
 ** Custom ellipsis
