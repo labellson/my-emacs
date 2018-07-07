@@ -604,6 +604,13 @@ check [[https://github.com/joostkremers/visual-fill-column][visual-fill-column]]
 (setq-default fill-column 79)
 #+END_SRC
 
+** Set the directory
+Set the path of the org directory
+
+#+BEGIN_SRC emacs-lisp
+(setq org-directory "~/Drive/org/")
+#+END_SRC
+
 ** Setting up the agenda
 I'm triying to use the =org= agenda in order to organize all my workflow
 tasks. So in this section there are some agenda useful configurations.
@@ -638,7 +645,7 @@ so lets define one along with a keybinging to call it.
 #+BEGIN_SRC emacs-lisp
 (setq org-capture-templates
 	  '(("a" "My TODO task format." entry
-		 (file "todo.org")
+		 (file "agenda.org")
 		 "* TODO %?
 SCHEDULED: %t")))
 
