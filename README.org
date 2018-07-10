@@ -506,6 +506,25 @@ Better [[https://emacs.cafe/emacs/javascript/setup/2017/04/23/emacs-setup-javasc
   (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
   (add-hook 'js2-mode-hook #'js2-imenu-extras-mode))
 #+END_SRC
+** Dockerfile
+Spotify created a mayor mode that provides syntax highlighting as well as the
+ability to build the image directly from the buffer with ~C-c C-b~.
+
+Also you can specify the image name in the file itself as in =org-mode=
+[[https://www.gnu.org/software/emacs/manual/html_node/emacs/Specifying-File-Variables.html][File-Local Variables]].
+
+#+BEGIN_EXAMPLE
+## -*- docker-image-name: "your-image-name-here" -*-
+#+END_EXAMPLE
+
+#+BEGIN_SRC emacs-lisp
+(use-package dockerfile-mode
+  :ensure t
+  :config
+
+  (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
+#+END_SRC
+
 ** =hideshow=
 This minor mode provides selectively folding for code and comment
 blocks. Blocks are defined per mayor mode. It cames pre-configured with default
