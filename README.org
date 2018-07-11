@@ -1116,11 +1116,3 @@ pdf display keeps blinking. [[https://github.com/politza/pdf-tools/issues/201][x
 * Acknowledgments
 - Thanks to Diego Vicente. He discovered me Emacs and =org-mode=. Also, many
   aspects of my Emacs file are inpired by his [[https://github.com/DiegoVicen/my-emacs][config file]].
-
-* TODO-List
-** TODO Format and document all the config file
-** TODO Add different hooks for different mayor modes like org-mode
-** TODO Configure Emacs as an IDE
-*** TODO Python
-*** TODO C++
-*** TODO C#
