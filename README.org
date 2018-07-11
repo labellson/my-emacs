@@ -506,7 +506,7 @@ Better [[https://emacs.cafe/emacs/javascript/setup/2017/04/23/emacs-setup-javasc
   (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
   (add-hook 'js2-mode-hook #'js2-imenu-extras-mode))
 #+END_SRC
-** Dockerfile
+** Docker files
 Spotify created a mayor mode that provides syntax highlighting as well as the
 ability to build the image directly from the buffer with ~C-c C-b~.
 
@@ -523,6 +523,15 @@ Also you can specify the image name in the file itself as in =org-mode=
   :config
 
   (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
+#+END_SRC
+
+Also =docker-compose-mode= provides syntax highlighting and completions for
+=docker-compose= files using company as backend.
+
+#+BEGIN_SRC emacs-lisp
+(use-package docker-compose-mode
+  :ensure t
+  :hook (docker-compose-mode . company-mode))
 #+END_SRC
 
 ** =hideshow=
