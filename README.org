@@ -1115,4 +1115,4 @@ pdf display keeps blinking. [[https://github.com/politza/pdf-tools/issues/201][x
 #+END_SRC
 * Acknowledgments
 - Thanks to Diego Vicente. He discovered me Emacs and =org-mode=. Also, many
-  aspects of my Emacs file are inpired by his [[https://github.com/DiegoVicen/my-emacs][config file]].
+  aspects of my Emacs file are inspired by his [[https://github.com/DiegoVicen/my-emacs][config file]].
