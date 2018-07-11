@@ -685,7 +685,25 @@ SCHEDULED: %t")))
 (global-set-key (kbd "C-c c c") 'my-org-task-capture)
 #+END_SRC
 
-Below these lines there are some tweaks that I've found for the agenda.
+Also, I want an easy way to add tasks from the agenda view. So lets bound the =c= key
+to the default capture command. In addition, pressing =C-u c= will open the
+default =org-capture= dialog prompting the different capture types.
+
+The key binding is set in [[ref:sec:agenda-key-bindings][Agenda key bindings]] section.
+
+#+BEGIN_SRC emacs-lisp
+(defun my-org-agenda-capture (&optional vanilla)
+  "Capture a task in agenda mode, using the date at point.
+
+If VANILLA is non-nil, run the standard `org-capture'."
+  (interactive "P")
+  (if vanilla
+      (org-capture)
+    (let ((org-overriding-default-time (org-get-cursor-date)))
+      (org-capture nil "a"))))
+#+END_SRC
+
+Below these lines, there are some tweaks that I've found for the agenda.
 
 Performing a text search ("s" selection from =org-agenda=) include all the text
 from the file list in =org= agenda.
@@ -711,13 +729,23 @@ for logging how many the times a deadline or an scheduled date was changed.
 (setq org-log-reschedule (quote time))
 #+END_SRC
 
-Rebind the =k= and =j= keys to move up and down as in =evil-mode=.
+*** Agenda key bindings
+:PROPERTIES:
+:CUSTOM_ID: sec:agenda-key-bindings
+:END:
+
+In this section are all the key bindings related to the agenda mode. They need
+to be evaluated after the =org-agenda-mode= was loaded, otherwise =Emacs= would
+fail to evaluate them.
+
+- Rebind the =k= and =j= keys to move up and down as in =evil-mode=.
 
 #+BEGIN_SRC emacs-lisp
 (eval-after-load 'org-agenda
   '(progn
 	 (define-key org-agenda-mode-map "j" 'org-agenda-next-item)
-	 (define-key org-agenda-mode-map "k" 'org-agenda-previous-item)))
+	 (define-key org-agenda-mode-map "k" 'org-agenda-previous-item)
+	 (define-key org-agenda-mode-map "c" 'my-org-agenda-capture)))
 #+END_SRC
 
 ** Agenda custom commands
