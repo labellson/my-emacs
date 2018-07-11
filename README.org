@@ -659,7 +659,7 @@ add some workflow states to the default *TODO* | *DONE* defined on Emacs
 	  '((sequence "TODO" "IN-PROGRESS" "WAITING" "|" "DONE" "CANCELED")))
 #+END_SRC
 
-Also setting this keybinding allows me take quick looks to the agenda.
+Also setting this keybinding allows me take quick looks to the agenda by week.
 
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-c t a") 'org-agenda-list)
@@ -701,6 +701,21 @@ If VANILLA is non-nil, run the standard `org-capture'."
       (org-capture)
     (let ((org-overriding-default-time (org-get-cursor-date)))
       (org-capture nil "a"))))
+#+END_SRC
+
+Finally, I want to see my daily agenda as I defined in my custom view in the
+section [[ref:sec:agenda-custom-commands][Agenda custom commands]]. So, as I take quick looks to the daily agenda
+the =S-SPC= binding fits perfect.
+
+#+BEGIN_SRC emacs-lisp
+(defun my-pop-to-org-agenda (&optional split)
+  "Visit the org agenda, in the current window or a SPLIT."
+  (interactive "P")
+  (org-agenda nil "d")
+  (when (not split)
+    (delete-other-windows)))
+
+(global-set-key (kbd "S-SPC") 'my-pop-to-org-agenda)
 #+END_SRC
 
 Below these lines, there are some tweaks that I've found for the agenda.
@@ -749,6 +764,9 @@ fail to evaluate them.
 #+END_SRC
 
 ** Agenda custom commands
+:PROPERTIES:
+:CUSTOM_ID: sec:agenda-custom-commands
+:END:
 This custom commands are intended to define my custom view of the agenda. All
 the ideas are inspired on [[https://blog.aaronbieber.com/2016/09/24/an-agenda-for-life-with-org-mode.html][this Aaron Bieber]] blog entry.
 
