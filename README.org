@@ -202,6 +202,20 @@ One liner functions to know in which system we are running.
 	  (string-equal system-name "cygwin")))
 #+END_SRC
 
+** Tramp configuration
+The Transparent Remote Access, Multiple Protocols enables editing remote files
+using different protocols. It's very easy to use because the user doen not have
+to worry about anything.
+
+I only had one problem with it. TRAMP doesn't recognized the remote shell
+prompt because the server used a customised prompt, so TRAMP hangs with the
+message "/Waiting for prompts from remote shell/". This is easy to fix adding
+~.*~ to the ~tramp-shell-prompt-pattern~ variable [[https://www.emacswiki.org/emacs/TrampMode#toc12][as said in emacs wiki]].
+
+#+BEGIN_SRC emacs-lisp
+(setq tramp-shell-prompt-pattern "\\(?:^\\|\r\\)[^]#$%>\n]*#?[]#$%>].* *\\(^[\\[[0-9;]*[a-zA-Z] *\\)*")
+#+END_SRC
+
 ** Esc key as C-g
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
