@@ -1060,9 +1060,7 @@ Also, this alternative package complement =ivy=
 (use-package ivy-rich
   :ensure t
   :demand t
-  :config
-  (ivy-set-display-transformer 'ivy-switch-buffer
-							   'ivy-rich-switch-buffer-transformer))
+  :config (ivy-rich-mode))
 #+END_SRC
 
 =counsel= is collection of Ivy-enhanced versions of common Emacs commands. So,
