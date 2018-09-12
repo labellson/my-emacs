@@ -459,7 +459,7 @@ In order to use ipython as default interpreter set these lines below.
 
 #+BEGIN_SRC emacs-lisp
 (setq python-shell-interpreter "ipython"
-       python-shell-interpreter-args "--simple-prompt -i")
+      python-shell-interpreter-args "--simple-prompt -i")
 #+END_SRC
 
 I've set a global =tab-width= in basic emacs setup. But it seems not working in
@@ -471,40 +471,14 @@ I've set a global =tab-width= in basic emacs setup. But it seems not working in
         (setq tab-width 4)))
 #+END_SRC
 
-*** =anaconda-mode=
-[[https://github.com/proofit404/anaconda-mode][Anaconda]] provides context code completion, jump to definitions, find references
-and documentation view through =eldoc= for python mode. Its usage is very
-simple and it integrates with =company-mode=.
-
-#+BEGIN_SRC emacs-lisp
-(use-package anaconda-mode
-  :ensure t
-  :config
-    (add-hook 'python-mode-hook 'anaconda-mode)
-    (add-hook 'python-mode-hook 'anaconda-eldoc-mode))
-#+END_SRC
-
-**** Default Keybinding
-| Keybinding | Description                    |
-|------------+--------------------------------|
-| C-M-i      | anaconda-mode-complete         |
-| M-.        | anaconda-mode-find-definitions |
-| M-,        | anaconda-mode-find-assignments |
-| M-r        | anaconda-mode-find-references  |
-| M-*        | anaconda-mode-go-back          |
-| M-?        | anaconda-mode-show-doc         |
+** Regular Python configuration
    
-*** =company-anaconda=
-This is a backend for =company-mode= that works with =anaconda-mode=. Necessary
-if you want autocompletion.
-
 #+BEGIN_SRC emacs-lisp
-(use-package company-anaconda
+(use-package elpy
   :ensure t
   :config
-
-    (eval-after-load "company"
-      '(add-to-list 'company-backends '(company-anaconda :with company-capf))))
+  (elpy-enable)
+  (add-hook 'elpy-mode-hook (lambda () (highlight-indentation-mode -1))))
 #+END_SRC
 
 *** Package for Python docstrings
