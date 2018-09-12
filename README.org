@@ -962,6 +962,15 @@ searches.
 	(kbd "C-w C-w") 'other-window))
 #+END_SRC
 
+** =which-key=
+A useful package that displays the possible key combinations when you start a
+new key command.
+
+#+BEGIN_SRC emacs-lisp
+(use-package which-key
+  :ensure t
+  :config (which-key-mode))
+#+END_SRC
 ** Move buffers around
 There's no fast way to swap buffers location in Emacs by default. To do it, a
 good option is to use =buffer-move= package and use these key bindings.
