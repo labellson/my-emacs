@@ -578,47 +578,6 @@ this config. This [[https://emacs.stackexchange.com/questions/2884/the-old-how-t
 These source blocks needs to be moved to its corresponding sections.
 
 #+BEGIN_SRC emacs-lisp
-;; Don't create backups
-;; (setq make-backup-files nil)
-
-;; org-mode
-
-
-(use-package org-ref
-  :ensure t
-  :config
-
-  (setq org-src-preserve-indentation t)
-
-  (setq org-latex-default-packages-alist
-	(-remove-item
-	 '("" "hyperref" nil)
-	 org-latex-default-packages-alist))
-
-  (add-to-list 'org-latex-default-packages-alist '("" "natbib" "") t)
-  (add-to-list 'org-latex-default-packages-alist
-	       '("linktocpage,pdfstartview=FitH,colorlinks,linkcolor=black,anchorcolor=black,citecolor=black,filecolor=blue,menucolor=black,urlcolor=blue"
-		 "hyperref" nil)
-	       t)
-
-  (progn
-    (setq org-ref-bibliography-notes "~/Drive/org/bibliography/notes.org"
-          org-ref-default-bibliography '("~/Drive/org/bibliography/main.bib")
-          org-ref-pdf-directory "~/Drive/org/bibliography/pdfs"
-          org-latex-pdf-process
-          '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-            "bibtex %b"
-            "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-            "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f")))
-
-  (setq bibtex-autokey-year-length 4
-      bibtex-autokey-name-year-separator "-"
-      bibtex-autokey-year-title-separator "-"
-      bibtex-autokey-titleword-separator "-"
-      bibtex-autokey-titlewords 2
-      bibtex-autokey-titlewords-stretch 1
-      bibtex-autokey-titleword-length 5))
-
 (use-package org-autolist
   :ensure t
   :config (add-hook 'org-mode-hook (lambda () (org-autolist-mode))))
@@ -838,6 +797,56 @@ By default =TAB= keystroke doesn't indent in =org= source blocks. Typing
 (setq org-src-tab-acts-natively t)
 #+END_SRC
 
+** =org-ref=
+This is an =org-mode= module to handle citations, cross-references and
+bibliographies.
+
+We require the packages and set the default for the bibliography notes, the
+main .bib bibliography and the directory where the PDFs can be downloaded to.
+
+#+BEGIN_SRC emacs-lisp
+(use-package org-ref
+  :ensure t
+  :config
+
+  (setq org-src-preserve-indentation t)
+
+  (setq org-latex-default-packages-alist
+	(-remove-item
+	 '("" "hyperref" nil)
+	 org-latex-default-packages-alist))
+
+  (add-to-list 'org-latex-default-packages-alist '("" "natbib" "") t)
+  (add-to-list 'org-latex-default-packages-alist
+	       '("linktocpage,pdfstartview=FitH,colorlinks,linkcolor=black,anchorcolor=black,citecolor=black,filecolor=blue,menucolor=black,urlcolor=blue"
+		 "hyperref" nil)
+	       t)
+
+  (progn
+    (setq org-ref-bibliography-notes "~/Drive/org/bibliography/notes.org"
+          org-ref-default-bibliography '("~/Drive/org/bibliography/main.bib")
+          org-ref-pdf-directory "~/Drive/org/bibliography/pdfs"
+          org-latex-pdf-process
+          '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+            "bibtex %b"
+            "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+            "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f")))
+
+  (setq bibtex-autokey-year-length 4
+      bibtex-autokey-name-year-separator "-"
+      bibtex-autokey-year-title-separator "-"
+      bibtex-autokey-titleword-separator "-"
+      bibtex-autokey-titlewords 2
+      bibtex-autokey-titlewords-stretch 1
+      bibtex-autokey-titleword-length 5))
+#+END_SRC
+
+This enable the use of native =org-mode= labels in =org-ref= links, instead the
+~label:org-ref~ style.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-latex-prefer-user-labels t)
+#+END_SRC
 ** IEEE export
 For class assignments and who-knows-what in the future, I was able to integrate
 a IEEE Conference template in org-mode export via Latex. To use it, just
