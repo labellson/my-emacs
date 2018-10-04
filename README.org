@@ -1019,6 +1019,25 @@ This setting enables the margin line numbers with the relative number mode.
   :config
   (zlc-mode t))
 #+END_SRC
+** Environment variables
+Emacs doesn't look to my user environment variables. Therefore, I can't get
+python completion working with my own modules because it doesn't look for my
+~$PYTHONPATH~. =exec-path-from-shell= is an Emacs library to ensure variables
+inside Emacs look the same as in the user's shell. By default it sets the user
+~$MANPATH~ and ~$PATH~. Also you can copy other environment variables by
+customizing ~exec-path-from-shell-variables~ or by calling
+~exec-path-from-shell-copy-env~.
+
+#+BEGIN_SRC emacs-lisp
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+
+  (when (memq window-system '(mac ns x))
+	(add-to-list 'exec-path-from-shell-variables '"PYTHONPATH")
+	(exec-path-from-shell-initialize)))
+#+END_SRC
+
 ** Spell checking
 Emacs comes with =ispell= a very useful spell checker if you use emacs to write
 notes or documents as I do. =ispell= needs a completion tool to review the
