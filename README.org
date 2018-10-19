@@ -378,26 +378,36 @@ I've been using *NeoVim* with =YouCompleteMe= for C/C++ development. But, I
 want to change my default text editor to emacs. So, this section sums up my
 research on C/C++ related emacs packages. 
 
-** =emacs-ycmd=
-I've been testing =rtags= and =irony= modes, but I could not properly
-configurate. But, I've seen there's a client for =ycmd= on emacs too.
-
-=emacs-ycmd= is an emacs mode that takes care of managing a ycmd server and
-fetching completions from that server to offer some IDE-like functionality for
-C/C++.
-
-In order to use this package the [[https://github.com/Valloric/ycmd][ycmd]] server must be compiled. For C/C++
-completion: ~./build.py --clang-completer~.
-
-=ycmd= search the headers using the ~.ycm_extra_conf.py~ and
-~compile_commands.json~ compilation database. This last file is easilly
-generated if using =cmake= as the build tool and passing
-~-DCMAKE_EXPORT_COMPILE_COMMANDS=ON~ flag. But for projects that doesn't use
-=cmake= you can use [[https://github.com/rizsotto/Bear][BEAR]], that intercept the ~exec~ calls issued by the build
-tool and generates the database. You can invoke it like this: ~bear
-<your-build-command>~.
+*** =cmake-mode=
+This package provides syntax highlight in =CMakeLists.txt= files and
+completions via =company-cmake= backend. Very useful when creating the =CMake=
+files.
 
 #+BEGIN_SRC emacs-lisp
+(use-package cmake-mode
+  :ensure t)
+#+END_SRC
+
+*** =emacs-ycmd=
+ I've been testing =rtags= and =irony= modes, but I could not properly
+ configurate. But, I've seen there's a client for =ycmd= on emacs too.
+
+ =emacs-ycmd= is an emacs mode that takes care of managing a ycmd server and
+ fetching completions from that server to offer some IDE-like functionality for
+ C/C++.
+
+ In order to use this package the [[https://github.com/Valloric/ycmd][ycmd]] server must be compiled. For C/C++
+ completion: ~./build.py --clang-completer~.
+
+ =ycmd= search the headers using the ~.ycm_extra_conf.py~ and
+ ~compile_commands.json~ compilation database. This last file is easilly
+ generated if using =cmake= as the build tool and passing
+ ~-DCMAKE_EXPORT_COMPILE_COMMANDS=ON~ flag. But for projects that doesn't use
+ =cmake= you can use [[https://github.com/rizsotto/Bear][BEAR]], that intercept the ~exec~ calls issued by the build
+ tool and generates the database. You can invoke it like this: ~bear
+ <your-build-command>~.
+
+ #+BEGIN_SRC emacs-lisp
 (use-package ycmd
   :ensure t
   :config
@@ -408,11 +418,11 @@ tool and generates the database. You can invoke it like this: ~bear
 
   (add-hook 'c++-mode-hook #'ycmd-mode)
   (add-hook 'ycmd-mode-hook 'ycmd-eldoc-setup))
-#+END_SRC
+ #+END_SRC
 
-To enable code completion with company install the backend.
+ To enable code completion with company install the backend.
 
-#+BEGIN_SRC emacs-lisp
+ #+BEGIN_SRC emacs-lisp
 (use-package company-ycmd
   :ensure t
   :config
@@ -421,11 +431,11 @@ To enable code completion with company install the backend.
 
   (eval-after-load 'company
 	'(add-to-list 'company-backends 'company-ycmd)))
-#+END_SRC
+ #+END_SRC
 
-For live code checking =flycheck-ycmd= must be installed.
+ For live code checking =flycheck-ycmd= must be installed.
 
-#+BEGIN_SRC emacs-lisp
+ #+BEGIN_SRC emacs-lisp
 (use-package flycheck-ycmd
   :ensure t
   :config
@@ -433,7 +443,7 @@ For live code checking =flycheck-ycmd= must be installed.
   (flycheck-ycmd-setup)
 
   (add-hook 'ycmd-mode-hook 'flycheck-ycmd-setup))
-#+END_SRC
+ #+END_SRC
 
 ** Python
 In order to use ipython as default interpreter set these lines below.
