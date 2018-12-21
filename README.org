@@ -998,8 +998,17 @@ new key command.
   :ensure t
   :config (which-key-mode))
 #+END_SRC
+** Add icons with =all-the-icons=
+This package comes with a set of icons for Emacs. You have to install them with
+~all-the-icons-install-fonts~
+
+#+BEGIN_SRC emacs-lisp
+(use-package all-the-icons
+  :ensure t)
+#+END_SRC
+
 ** =dired=
-This is the default Emacs system directory. It's super useful, specially when
+This is the default Emacs system directory. It's super useful, specially when
 I'm in some OS where I don't feel very confortable :P Dired allows you
 navigation through the filesystem using a text buffer. That's very useful
 because if you press =C-x C-q= in the dired buffer it turns into a writeable
