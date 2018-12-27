@@ -1025,9 +1025,10 @@ In this [[https://www.youtube.com/watch?v=7jZdul2fC94][video]] you can see a ref
   :config
   (setq dired-dwim-target t))
 
-(use-package all-the-icons-dired
-  :ensure t
-  :hook (dired-mode . all-the-icons-dired-mode))
+(if (not '(system-is-windows))
+	(use-package all-the-icons-dired
+	  :ensure t
+	  :hook (dired-mode . all-the-icons-dired-mode)))
 
 (use-package dired-sidebar
   :ensure t
