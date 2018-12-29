@@ -1089,14 +1089,20 @@ The last two lines prevents =ispell= to check inside =org= source blocks and
 sections.
    
 #+BEGIN_SRC emacs-lisp
-;; Spell checker
-(when (executable-find "hunspell")
-  (setq-default ispell-program-name "hunspell")
-  (setq ispell-dictionary "es_ES")
-  (setq ispell-really-hunspell t))
+(use-package flyspell
+  :ensure t
+  :hook (org-mode .(lambda() (setq ispell-parser 'tex)))
+  :config
 
-(add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
-(add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
+  (when (executable-find "aspell")
+	(setq ispell-program-name "aspell")
+	(setq ispell-dictionary "espanol"))
+
+  (set-face-underline 'flyspell-incorrect
+					  '(:color "#dc322f" :style line))
+
+  (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
+  (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC")))
 #+END_SRC
 ** =ivy=
 =ivy= is a minimalistic completion engine. It supports fuzzy matching. But I
