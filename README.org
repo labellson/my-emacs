@@ -67,6 +67,15 @@ but I don't like the default widht. So...
 (setq-default tab-width 4)
 #+END_SRC
 
+** Set window title to buffer name
+With this option the window title will be as the filename or like the name of
+the unsaved buffer. Handy when you want to classify =*Emacs Anywhere*= unsaved
+buffers and set as floating panes within i3. 
+   
+#+BEGIN_SRC emacs-lisp
+(setq frame-title-format '("%b"))
+#+END_SRC
+
 ** Disable =yes-or-no= messages
 There are different types of confirmation prompts in Emacs. One of them forces
 you to write =yes= and the other one only to press =y=, so I disable the first
