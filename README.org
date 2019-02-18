@@ -22,7 +22,7 @@ Relevant personal information that Emacs needs.
 
 #+BEGIN_SRC emacs-lisp
 (setq user-full-name "Daniel Laguna"
-    user-mail-address "labellson@gmail.com"
+    user-mail-address "labellson@fastmail.com"
     calendar-latitude 40.33
     calendar-longitude -3.76
     calendar-location-name "Madrid, Spain")
@@ -967,7 +967,7 @@ With this option all the =CLOCKS= will be grouped into a =:CLOCKING:= entry
 (setq org-clock-into-drawer t)
 #+END_SRC
 
-* Packages & Tools
+* Other major modes
 ** Evil mode
 I'm very used to =Vim= and prefer its keybindings over the Emacs
 ones. =Evil-mode= provides keybindings and emulates the main features of =Vim=.
@@ -1012,6 +1012,149 @@ searches.
 	(kbd "C-w C-w") 'other-window))
 #+END_SRC
 
+** =mu4e=
+=mu= is a simple command line tool for searching through emails. It's a cute
+little tool and is especially nice for allowing you to quickly check for any
+new email without leaving the terminal. However, you need to have an offline
+copy of the messages where =mu= can search. This is done through
+=offlineimap=. You can find how is configured in my [[https://github.com/labellson/dotfiles][dotfiles]] repository.
+
+=mu4e= is the Emacs email client included with =mu=. It provides functionality
+to search over the offline copy of my emails, move them around, and send/reply
+to different mail servers.
+
+For sending mail using SMTP, =mu4e= uses =smtpmail= in order to establish the
+connection to the SMTP server. The authentication is done using [[https://www.gnu.org/software/emacs/manual/html_node/auth/index.html#Top][auth-source]]
+library.
+
+As [[http://cachestocaches.com/2017/3/complete-guide-email-emacs-using-mu-and-/#pitfalls-and-additional-tweaks][Gregory J Stein]] points, =offlineimap= won't sync the messages sended to the
+trash marked with the *T* label, which happens  whenever you delete a message
+with *d*. The workaround is the last function defined in the below snippet.
+
+#+BEGIN_SRC emacs-lisp
+(use-package mu4e
+  :load-path "/usr/share/emacs/site-lisp/mu4e"
+  :demand t
+  :bind (("C-c m" . mu4e))
+  :hook (mu4e-compose-mode . flyspell-mode)
+  :config
+
+  ;; Set the default Maildir folders 
+  (setq mu4e-maildir "~/.maildir"
+		mu4e-sent-folder "/fastmail/Sent"
+		mu4e-drafts-folder "/fastmail/Drafts"
+		mu4e-trash-folder "/fastmail/Trash"
+		mu4e-refile-folder "/fastmail/Archive"
+		mu4e-completing-read-function 'ivy-completing-read
+		mu4e-confirm-quit nil
+		mu4e-kill-buffer-on-exit t
+		smtpmail-stream-type 'ssl
+		smtpmail-smtp-server "smtp.fastmail.com"
+		smtpmail-smtp-service 465)
+
+  (setq send-mail-function 'smtpmail-send-it
+		message-send-mail-function 'smtpmail-send-it)
+
+  (setq mu4e-bookmarks
+		`( ,(make-mu4e-bookmark
+			 :name  "Unread messages"
+			 :query "flag:unread AND NOT flag:trashed AND NOT maildir:/fastmail/Spam"
+			 :key ?u)
+		   ,(make-mu4e-bookmark
+			 :name "Today's messages"
+			 :query "date:today..now"
+			 :key ?t)
+		   ,(make-mu4e-bookmark
+			 :name "Last 7 days"
+			 :query "date:7d..now"
+			 :key ?w)
+		   ,(make-mu4e-bookmark
+			 :name "Inbox"
+			 :query "maildir:/fastmail/INBOX"
+			 :key ?i)))
+
+  ;; Avoid completely deletion of trash messages from server
+  (defun remove-nth-element (nth list)
+	(if (zerop nth) (cdr list)
+      (let ((last (nthcdr (1- nth) list)))
+		(setcdr last (cddr last))
+		list)))
+  (setq mu4e-marks (remove-nth-element 5 mu4e-marks))
+  (add-to-list 'mu4e-marks
+			   '(trash
+				 :char ("d" . "▼")
+				 :prompt "dtrash"
+				 :dyn-target (lambda (target msg) (mu4e-get-trash-folder msg))
+				 :action (lambda (docid msg target) 
+						   (mu4e~proc-move docid
+										   (mu4e~mark-check-target target) "-N")))))
+#+END_SRC
+
+As I use =evil-mode=, lets enable =vim-like= keystrokes inside =mu4e=.
+
+#+BEGIN_SRC emacs-lisp
+(use-package evil-mu4e
+  :ensure t)
+#+END_SRC
+
+Thanks to =mu4e-alert= whenever you call ~mu4e-alert-enable-mode-line-display~,
+your modeline will be updated to include a little envelope icon and the current
+count of unread messages.
+
+#+BEGIN_SRC emacs-lisp
+(use-package mu4e-alert
+  :ensure t
+  :after mu4e
+  :hook (after-init . mu4e-alert-enable-mode-line-display)
+  :config
+
+  (mu4e-alert-set-default-style 'libnotify)
+  (setq mu4e-alert-interesting-mail-query
+		"flag:unread AND NOT flag:trashed AND NOT maildir:fastmail/Spam")
+
+  (setq mu4e-alert-modeline-formatter
+		'mu4e-alert-custom-mode-line-formatter)
+
+  (defun mu4e-alert-custom-mode-line-formatter (mail-count)
+	"Custom formatter used to get the string to be displayed in the
+mode-line.Uses Font Awesome mail icon to have a more visual icon
+in the display.  MAIL-COUNT is the count of mails for which the
+string is to displayed"
+	(when (not (zerop mail-count))
+      (concat " "
+              (propertize
+               ""
+               ;; 'display (when (display-graphic-p)
+               ;;            display-time-mail-icon)
+               'face display-time-mail-face
+               'help-echo (concat (if (= mail-count 1)
+                                      "You have an unread email"
+									(format "You have %s unread emails" mail-count))
+                                  "\nClick here to view "
+                                  (if (= mail-count 1) "it" "them"))
+               'mouse-face 'mode-line-highlight
+               'keymap '(mode-line keymap
+                                   (mouse-1 . mu4e-alert-view-unread-mails)
+                                   (mouse-2 . mu4e-alert-view-unread-mails)
+                                   (mouse-3 . mu4e-alert-view-unread-mails)))
+              (if (zerop mail-count)
+                  " "
+				(format " [%d] " mail-count))))))
+#+END_SRC
+
+Also, I define a custom function so that updating the mail is possible just by pinging the Emacs daemon. I have this function called as a post-hook every time the offlineimap is called.
+
+#+BEGIN_SRC emacs-lisp
+(defun update-mail-in-server ()
+  "Check for mail and update the mode line icon."
+  (interactive)
+  (mu4e-update-mail-and-index t)
+  (mu4e-alert-enable-mode-line-display)
+  ;; Clear echo area in 2 seconds after update
+  (run-with-timer 2 nil (lambda () (message nil))))
+#+END_SRC
+
+* Packages & Tools
 ** =which-key=
 A useful package that displays the possible key combinations when you start a
 new key command.
