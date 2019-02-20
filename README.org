@@ -1045,8 +1045,10 @@ store emails into the agenda file.
 
   (require 'org-mu4e)
 
-
-  ;; Set the default Maildir folders 
+  ;; Set mu4e as default mail user agent
+  (setq mail-user-agent 'mu4e-user-agent)
+  
+  ;; Set the default Maildir folders
   (setq mu4e-maildir "~/.maildir"
 		mu4e-sent-folder "/fastmail/Sent"
 		mu4e-drafts-folder "/fastmail/Drafts"
