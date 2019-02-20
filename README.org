@@ -1044,6 +1044,7 @@ store emails into the agenda file.
   :config
 
   (require 'org-mu4e)
+  (require 'shr)
 
   ;; Set mu4e as default mail user agent
   (setq mail-user-agent 'mu4e-user-agent)
@@ -1067,7 +1068,10 @@ store emails into the agenda file.
   (setq	mu4e-view-date-format "%a %e %b %Y %T"
 		mu4e-headers-date-format "%d/%m/%Y"
 		mu4e-headers-time-format "%T"
-		mu4e-view-prefer-html t)
+		mu4e-view-prefer-html t
+		shr-use-colors nil
+		shr-use-fonts nil
+		shr-width 79)
 
   (setq mu4e-bookmarks
 		`( ,(make-mu4e-bookmark
