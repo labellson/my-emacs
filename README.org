@@ -927,6 +927,18 @@ as visual symbols.
 #+BEGIN_SRC emacs-lisp
 (setq-default org-pretty-entities t)
 #+END_SRC
+** =org-download=
+Thanks to [[https://github.com/abo-abo/org-download][org-download]] you are able to drag and drop images to Emacs
+=org-mode=. There are several sources image cames from: From browser, file
+system, remote address using ~org-download-yank~ or a screenshot using
+~org-download-screenshot~.
+
+#+BEGIN_SRC emacs-lisp
+(require 'org-download)
+
+(add-hook 'dired-mode-hook 'org-download-enable)
+#+END_SRC
+   
 ** Use syntax highlight in source blocks
 When writing source code on a block, if this variable is enabled it will use
 the same syntax highlight as the mode supposed to deal with it.
