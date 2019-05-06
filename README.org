@@ -61,10 +61,16 @@ maintenance of a configuration file.
 ** TAB
 =<TAB>= key run indentation in most of the major mode. Sometimes, I want to
 =<TAB>= behaves as inserting a tab character. I can do this typing =C-q-<TAB>=
-but I don't like the default widht. So...
+but I don't like the default widht so I change it to 4. Also, I want to try
+white spaces indentation so I deactivated the tab based indentation.
 
 #+BEGIN_SRC emacs-lisp
 (setq-default tab-width 4)
+
+(global-set-key (kbd "C-c w") 'whitespace-mode)
+(add-hook 'prog-mode-hook (lambda () (interactive) (setq show-trailing-whitespace 1)))
+
+(setq-default indent-tabs-mode nil)
 #+END_SRC
 
 ** Set window title to buffer name
@@ -427,6 +433,13 @@ I've been using *NeoVim* with =YouCompleteMe= for C/C++ development. But, I
 want to change my default text editor to emacs. So, this section sums up my
 research on C/C++ related emacs packages. 
 
+First of all lets set the indentation mode to the one you are used
+to. Personally I prefer the one Stroustrup follows.
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'c++-mode-hook (lambda () (c-set-style "stroustrup")))
+#+END_SRC
+
 *** =cmake-mode=
 This package provides syntax highlight in =CMakeLists.txt= files and
 completions via =company-cmake= backend. Very useful when creating the =CMake=
@@ -437,63 +450,57 @@ files.
   :ensure t)
 #+END_SRC
 
-*** =emacs-ycmd=
- I've been testing =rtags= and =irony= modes, but I could not properly
- configurate. But, I've seen there's a client for =ycmd= on emacs too.
+*** =ggtags=
+Provides an emacs frontend to GNU Global source code tagging system. You have
+to generate the tags database calling ~gtags~ on top of the project.
 
- =emacs-ycmd= is an emacs mode that takes care of managing a ycmd server and
- fetching completions from that server to offer some IDE-like functionality for
- C/C++.
+#+BEGIN_SRC emacs-lisp
+(use-package ggtags
+  :ensure t
+  :hook (c++-mode . ggtags-mode)
+  :bind (:map ggtags-mode-map
+		 ("C-c g s" . ggtags-find-other-symbol)
+		 ("C-c g h" . ggtags-view-tag-history)
+		 ("C-c g r" . ggtags-find-reference)
+		 ("C-c g f" . ggtags-find-file)
+		 ("C-c g c" . ggtags-create-tags)
+		 ("C-c g u" . ggtags-update-tags)
+		 ("M-," . pop-tag-mark))
+  :config
 
- In order to use this package the [[https://github.com/Valloric/ycmd][ycmd]] server must be compiled. For C/C++
- completion: ~./build.py --clang-completer~.
+  (setq-local imenu-create-index-function #'ggtags-build-imenu-index))
+#+END_SRC
+	
+*** Header completion with =company-c-headers=
+This backend provides header completion from *system* headers 
+~#include <header>~ and *user* provided per project ~#include "header"~.
 
- =ycmd= search the headers using the ~.ycm_extra_conf.py~ and
- ~compile_commands.json~ compilation database. This last file is easilly
- generated if using =cmake= as the build tool and passing
- ~-DCMAKE_EXPORT_COMPILE_COMMANDS=ON~ flag. But for projects that doesn't use
- =cmake= you can use [[https://github.com/rizsotto/Bear][BEAR]], that intercept the ~exec~ calls issued by the build
- tool and generates the database. You can invoke it like this: ~bear
- <your-build-command>~.
-
- #+BEGIN_SRC emacs-lisp
-(use-package ycmd
+In order to say where the backend have to look for the headers, you have to add
+the system paths to the list ~company-c-headers-path-system~. And also per
+project to the list ~company-c-headers-path-user~.
+	
+#+BEGIN_SRC emacs-lisp
+(use-package company-c-headers
   :ensure t
   :config
 
-  (set-variable 'ycmd-server-command `("python3",
-									   (file-truename "~/.ycmd/ycmd")))
-  (set-variable 'ycmd-global-config (expand-file-name "~/.ycmd/.ycm_extra_conf.py"))
+  (add-to-list 'company-c-headers-path-system '"/usr/include/c++/8.2.1/")
+  (add-to-list 'company-backends 'company-c-headers))
+#+END_SRC
 
-  (add-hook 'c++-mode-hook #'ycmd-mode)
-  (add-hook 'ycmd-mode-hook 'ycmd-eldoc-setup))
- #+END_SRC
+*** =semantic= minor mode
+This package provides language-aware editing commands base on source code
+parsers.
 
- To enable code completion with company install the backend.
+#+BEGIN_SRC emacs-lisp
+(require 'semantic)
 
- #+BEGIN_SRC emacs-lisp
-(use-package company-ycmd
-  :ensure t
-  :config
+(global-semanticdb-minor-mode)
+(global-semantic-idle-scheduler-mode)
 
-  (company-ycmd-setup)
-
-  (eval-after-load 'company
-	'(add-to-list 'company-backends 'company-ycmd)))
- #+END_SRC
-
- For live code checking =flycheck-ycmd= must be installed.
-
- #+BEGIN_SRC emacs-lisp
-(use-package flycheck-ycmd
-  :ensure t
-  :config
-
-  (flycheck-ycmd-setup)
-
-  (add-hook 'ycmd-mode-hook 'flycheck-ycmd-setup))
- #+END_SRC
-
+;(add-hook 'c++-mode-hook (lambda () (semantic-mode)))
+#+END_SRC
+	
 ** Python
 In order to use ipython as default interpreter set these lines below.
 
@@ -512,12 +519,18 @@ I've set a global =tab-width= in basic emacs setup. But it seems not working in
 #+END_SRC
 
 ** Regular Python configuration
+=elpy= provides IDE-kind functionality for Emacs. Right now is the best python
+package I tried for emacs. It comes with =flymake= as default syntax checker
+though. I deactivated it in favor of =flycheck=.
    
 #+BEGIN_SRC emacs-lisp
 (use-package elpy
   :ensure t
   :config
+
   (elpy-enable)
+  (remove-hook 'elpy-modules 'elpy-module-flymake)
+
   (add-hook 'elpy-mode-hook (lambda () (highlight-indentation-mode -1))))
 #+END_SRC
 
@@ -623,6 +636,27 @@ this config. This [[https://emacs.stackexchange.com/questions/2884/the-old-how-t
 (add-hook 'nxml-mode-hook 'hs-minor-mode)
 (add-hook 'python-mode-hook 'hs-minor-mode)
 #+END_SRC
+*** =irony=
+
+#+BEGIN_SRC emacs-lisp
+(use-package irony
+  :ensure t
+  :config
+
+  (add-hook 'c++-mode-hook 'irony-mode)
+  (add-hook 'c-mode-hook 'irony-mode)
+  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(use-package company-irony
+  :ensure t
+  :config
+
+  (eval-after-load 'company
+    '(add-to-list 'company-backends 'company-irony)))
+#+END_SRC
+
 * WIP
 These source blocks needs to be moved to its corresponding sections.
 
@@ -1278,6 +1312,7 @@ customizing ~exec-path-from-shell-variables~ or by calling
 
   (when (memq window-system '(mac ns x))
 	(add-to-list 'exec-path-from-shell-variables '"PYTHONPATH")
+	(add-to-list 'exec-path-from-shell-variables '"GTAGSLIBPATH")
 	(exec-path-from-shell-initialize)))
 #+END_SRC
 
@@ -1401,9 +1436,12 @@ backend.
 #+BEGIN_SRC emacs-lisp
 (use-package flycheck
   :ensure t
+  :hook (prog-mode . flycheck-mode)
   :config
-  (add-hook 'prog-mode-hook #'flycheck-mode)
-  (set-face-underline 'flycheck-error '(:color "Red1" :style line)))
+
+  (set-face-underline 'flycheck-error '(:color "Red1" :style line))
+  (set-face-underline 'flycheck-warning '(:color "#e5aa00" :style line))
+  (set-face-underline 'flycheck-info '(:color "#268bd2" :style line)))
 #+END_SRC
 
 ** =smartparens=
