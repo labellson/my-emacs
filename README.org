@@ -1229,6 +1229,21 @@ This package comes with a set of icons for Emacs. You have to install them with
   :ensure t)
 #+END_SRC
 
+** Add emojis to emacs
+=emojify= will display emojis as images, so your emacs should be compiled with
+support for *PNG* images in order to display it properly. But if you have
+installed an emoji font is also a good idea to turn on the unicode display of
+emojis.
+
+#+BEGIN_SRC emacs-lisp
+(use-package emojify
+  :ensure t
+  :hook (after-init . global-emojify-mode)
+  :config
+
+  (setq emojify-emoji-styles '(unicode github)))
+#+END_SRC
+
 ** =dired=
 This is the default Emacs system directory. It's super useful, specially when
 I'm in some OS where I don't feel very confortable :P Dired allows you
