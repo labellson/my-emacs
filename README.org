@@ -562,6 +562,29 @@ emacs. This allows use all the emacs features inside the notebooks.
   :custom-face
   (ein:cell-input-area ((t (:background "#f9f2d9")))))
 #+END_SRC
+** Cython
+I am very curious about =Cython=, until now I have been using ~C++ boost~
+library in order to write my =Python= wrappers around =C/C++= code. =Cython=
+provides a variant of =Python= syntax such as optional static type declarations
+(this is not the same as =mypy=) that provides speed improvements when the code
+is compiled. Therefore, all the =Cython= code you write is compiled to =.c=
+files and then a =C= compiler compiles it to a shared library =.so= which can
+be imported directly into the normal =CPython= interpreter. 
+
+In order to be able to compile =Cython= code you will need to write a
+distutils/setuptools =setup.py= file. You can read about how to do it [[http://docs.cython.org/en/latest/src/quickstart/build.html][here]].
+
+The next lines are just some emacs packages that will help you to write your
+=Cython= code.
+
+#+BEGIN_SRC emacs-lisp
+(use-package cython-mode
+  :ensure t)
+
+(use-package flycheck-cython
+  :ensure t)
+#+END_SRC
+
 ** Javascript
 *** =js-2mode=
 Better [[https://emacs.cafe/emacs/javascript/setup/2017/04/23/emacs-setup-javascript.html][Javascript mode]].
