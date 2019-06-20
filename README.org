@@ -1377,6 +1377,8 @@ sections.
 
   (set-face-underline 'flyspell-incorrect
 					  '(:color "#dc322f" :style line))
+  (set-face-underline 'flyspell-duplicate
+					  '(:color "#e5aa00" :style line))
 
   (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
   (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC")))
