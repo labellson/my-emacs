@@ -654,6 +654,63 @@ Also =docker-compose-mode= provides syntax highlighting and completions for
   :hook (docker-compose-mode . company-mode))
 #+END_SRC
 
+** =LaTeX=
+This configuration tries to mimic a WYSIWYG editor in Emacs.
+
+*** =AUCTeX=
+Provides features in order to edit, compile and view =TeX= files in Emacs. You
+will need to install it from the repositories of your distribution.
+
+In order to get support for many other =LaTeX= packages you have to enable
+document parsing. If you also use ~\include~ you also should make =AUCTeX=
+aware of the multi-file document structure. Each time you open a new file
+=AUCTeX= will ask you for a master file.
+ 
+#+BEGIN_SRC emacs-lisp
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+(setq-default TeX-master nil)
+(setq LaTeX-electric-left-right-brace t)
+(setq TeX-source-correlate-mode t)
+(setq TeX-view-program-selection '(((output-dvi has-no-display-manager) "dvi2tty")
+                                   ((output-dvi style-pstricks) "dvips and gv")
+                                   (output-dvi "xdvi")
+                                   (output-pdf "PDF Tools")
+                                   (output-html "xdg-open")))
+#+END_SRC
+
+**** Formating functions
+Basic keybindings in order to format text.
+
+#+BEGIN_SRC emacs-lisp
+(add-hook  'LaTeX-mode-hook
+           (lambda ()
+             (local-set-key (kbd "C-c f") 'TeX-font)))
+#+END_SRC
+
+*** Enable =flyspell= in TeX files
+#+BEGIN_SRC emacs-lisp
+(add-hook 'LaTeX-mode-hook 'flyspell-mode)
+(add-hook 'LaTeX-mode-hook 'flyspell-buffer)
+#+END_SRC
+
+*** Enable =auto-fill= for TeX edition 
+#+BEGIN_SRC emacs-lisp
+(add-hook 'LaTeX-math-mode-hook 'auto-fill-mode)
+#+END_SRC
+
+*** Adding =company= support for TeX
+Add the backend enable auto-completion for LaTeX files.
+
+#+BEGIN_SRC emacs-lisp
+(use-package company-auctex
+  :ensure t
+  :hook (LaTeX-mode . company-mode)
+  :config
+
+  (company-auctex-init))
+#+END_SRC
+   
 ** =hideshow=
 This minor mode provides selectively folding for code and comment
 blocks. Blocks are defined per mayor mode. It cames pre-configured with default
@@ -700,7 +757,7 @@ These source blocks needs to be moved to its corresponding sections.
 
 * Org-mode
 ** Enable =auto-fill-mode=
-   This conf enables 80 characters auto filling per line inside =org-mode=. I
+This conf enables 80 characters auto filling per line inside =org-mode=. I
 believe that 80 character per line enhances the readability of a text file.
 
 If you want a visual behaviour inside =emacs= instead into the raw text file
