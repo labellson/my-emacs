@@ -1348,10 +1348,9 @@ customizing ~exec-path-from-shell-variables~ or by calling
   :ensure t
   :config
 
-  (when (memq window-system '(mac ns x))
-	(add-to-list 'exec-path-from-shell-variables '"PYTHONPATH")
-	(add-to-list 'exec-path-from-shell-variables '"GTAGSLIBPATH")
-	(exec-path-from-shell-initialize)))
+  (add-to-list 'exec-path-from-shell-variables '"PYTHONPATH")
+  (add-to-list 'exec-path-from-shell-variables '"GTAGSLIBPATH")
+  (exec-path-from-shell-initialize))
 #+END_SRC
 
 ** Spell checking
