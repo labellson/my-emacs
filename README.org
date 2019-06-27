@@ -1593,6 +1593,35 @@ pdf display keeps blinking. [[https://github.com/politza/pdf-tools/issues/201][x
   (lambda ()
     (set (make-local-variable 'evil-emacs-state-cursor) (list nil))))
 #+END_SRC
+** =Magit=
+=Magit= is an interface to VCS =Git= implemented as an emacs package.
+
+#+BEGIN_SRC emacs-lisp
+(use-package magit
+  :ensure t
+  :hook (git-commit-mode . (lambda () (setq-local fill-column 72)))
+  :bind (("C-x g" . magit-status))
+  :config
+
+  (setq magit-section-initial-visibility-alist '((unpushed . show)))
+  (git-commit-turn-on-auto-fill)
+
+  (when (running-i3)
+    (setq-default magit-bury-buffer-function 'quit-window-dwim
+                  magit-commit-show-diff nil)))
+
+(use-package evil-magit
+  :ensure t)
+
+(use-package magit-lfs
+  :ensure t)
+
+(use-package magit-todos
+  :ensure t
+  :config
+
+  (magit-todos-mode))
+#+END_SRC
 * Acknowledgments
 - Thanks to Diego Vicente. He discovered me Emacs and =org-mode=. Also, many
   aspects of my Emacs file are inspired by his [[https://github.com/DiegoVicen/my-emacs][config file]].
