@@ -705,7 +705,7 @@ buffer *after* the TeX compilation has finished.
 
 *** Enable =auto-fill= for TeX edition 
 #+BEGIN_SRC emacs-lisp
-(add-hook 'LaTeX-math-mode-hook 'auto-fill-mode)
+(add-hook 'LaTeX-mode-hook 'auto-fill-mode)
 #+END_SRC
 
 *** Adding =company= support for TeX
