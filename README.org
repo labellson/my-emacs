@@ -688,6 +688,15 @@ Basic keybindings in order to format text.
              (local-set-key (kbd "C-c f") 'TeX-font)))
 #+END_SRC
 
+**** Auto revert for pdf-tools
+Autorevert poll the file system every ~auto-revert-interval~
+seconds. Furthermore is possible to send an event which will revert the PDF
+buffer *after* the TeX compilation has finished.
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
+#+END_SRC
+
 *** Enable =flyspell= in TeX files
 #+BEGIN_SRC emacs-lisp
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
