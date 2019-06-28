@@ -268,7 +268,7 @@ compiling. This automatically scrolls the buffer for you as the output is printe
 In this section goes all these keybindings that don't really fit anywhere else.
 
 #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "C-c b") 'bookmark-jump)
+;(global-set-key (kbd "C-c b") 'bookmark-jump)
 #+END_SRC
 * Emacs GUI
 ** Disabling GUI bars
@@ -1630,6 +1630,49 @@ pdf display keeps blinking. [[https://github.com/politza/pdf-tools/issues/201][x
   :config
 
   (magit-todos-mode))
+#+END_SRC
+** =ivy-bibtex=
+I was using =helm= with =org-ref= in order to manage my bibliography. But this
+package allow you to search and manage your BibTeX bibliography using the
+minimalism of =ivy=.
+
+In order to store the pdfs =BibTeX= assumes that the name of a pdf consist of
+the reference key plus suffix =.pdf=.
+
+#+BEGIN_SRC emacs-lisp
+(use-package ivy-bibtex
+  :ensure t
+  ;:bind (("C-c ]" . ivy-bibtex))
+  :config
+
+  ;; ivy-bibtex requires ivy's `ivy--regex-ignore-order` regex builder, which
+  ;; ignores the order of regexp tokens when searching for matching candidates.
+  (add-to-list 'ivy-re-builders-alist '(ivy-bibtex . ivy--regex-ignore-order))
+
+  ;; Library configuration
+  (setq bibtex-completion-library-path '("~/Drive/org/bibliography/pdfs/"))
+  (setq bibtex-completion-bibliography '("~/Drive/org/bibliography/main.bib"))
+  (setq bibtex-completion-notes-path "~/Drive/org/bibliography/notes/")
+
+  (global-set-key (kbd "C-c b") 'ivy-bibtex))
+#+END_SRC
+
+By default emacs is used to open the pdf files using =DocView= or =PDF
+Tools=. With the next snippet you will be able to open the documents as default
+with ~p~ and with an external tool bounded to ~P~.
+
+#+BEGIN_SRC emacs-lisp
+(defun bibtex-completion-open-pdf-external (keys &optional fallback-action)
+  (let ((bibtex-completion-pdf-open-function
+         (lambda (fpath) (start-process "evince" "*helm-bibtex-evince*" "/usr/bin/evince" fpath))))
+    (bibtex-completion-open-pdf keys fallback-action)))
+
+(ivy-bibtex-ivify-action bibtex-completion-open-pdf-external ivy-bibtex-open-pdf-external)
+
+
+(ivy-add-actions
+ 'ivy-bibtex
+ '(("P" ivy-bibtex-open-pdf-external "Open PDF file in Evince viewer (if present)")))
 #+END_SRC
 * Acknowledgments
 - Thanks to Diego Vicente. He discovered me Emacs and =org-mode=. Also, many
