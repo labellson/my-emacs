@@ -1739,6 +1739,16 @@ with ~p~ and with an external tool bounded to ~P~.
  'ivy-bibtex
  '(("P" ivy-bibtex-open-pdf-external "Open PDF file in Evince viewer (if present)")))
 #+END_SRC
+** View Large Files
+=VLF= minor mode allows viewing, editing, searching and comparing large files
+in emacs. It divides the file on several batches and takes care of all the
+operations for you allowing to edite smoothly the contents of the file.
+
+#+BEGIN_SRC emacs-lisp
+(use-package vlf
+  :ensure t)
+#+END_SRC
+
 * Acknowledgments
 - Thanks to Diego Vicente. He discovered me Emacs and =org-mode=. Also, many
   aspects of my Emacs file are inspired by his [[https://github.com/DiegoVicen/my-emacs][config file]].
