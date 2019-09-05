@@ -606,18 +606,48 @@ The next lines are just some emacs packages that will help you to write your
   :ensure t)
 #+END_SRC
 
-** Javascript
-*** =js-2mode=
-Better [[https://emacs.cafe/emacs/javascript/setup/2017/04/23/emacs-setup-javascript.html][Javascript mode]].
+** Web development
+This is not my target but sometimes I have to deal with some web development. I
+found this [[https://github.com/fxbois/web-mode][web-mode]] package that makes easier the web development with
+emacs. This mode will be major mode activated for =HTML= and =Javascript=
+files.
+
+#+BEGIN_SRC emacs-lisp
+(use-package web-mode
+  :ensure t
+  :hook (html-mode . web-mode))
+#+END_SRC
+
+*** Javascript and React
+This package is useful in order to check the syntax and help you while you
+write =Javascript= code.
 
 #+BEGIN_SRC emacs-lisp
 (use-package js2-mode
   :ensure t
+  :hook (web-mode . js2-minor-mode)
   :config
 
-  (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-  (add-hook 'js2-mode-hook #'js2-imenu-extras-mode))
+  (add-to-list 'auto-mode-alist '("\\.jsx?$" . web-mode)))
 #+END_SRC
+
+*** =company-tern=
+Thanks to =Tern= Javascript analyzer is possible to have =company= completions
+for Javascript.
+
+*For some reason company don't load the tern backend*
+    
+#+BEGIN_SRC emacs-lisp
+(use-package company-tern
+  :ensure t
+  :hook (js2-minor-mode . tern-mode)
+  :config
+
+  ; For some reason this line is not being evaluated
+  (eval-after-load 'company '(add-to-list 'company-backends
+    'company-tern)))
+#+END_SRC
+
 ** Docker files
 Spotify created a mayor mode that provides syntax highlighting as well as the
 ability to build the image directly from the buffer with ~C-c C-b~.
@@ -1299,6 +1329,37 @@ Also, I define a custom function so that updating the mail is possible just by p
   (run-with-timer 2 nil (lambda () (message nil))))
 #+END_SRC
 
+=org-mime= is a package that enables HTML email writing using =org-mode= on
+Emacs side.
+
+#+BEGIN_SRC emacs-lisp
+(use-package org-mime
+  :ensure t
+  :after org
+  :hook (org-ctrl-c-ctrl-c . htmlize-org-mail)
+  :config
+
+  (setq-default composing-html-mail nil)
+
+    (defun compose-org-mail ()
+    "Create a new org scratch buffer to compose an HTML mail."
+    (interactive)
+    (let ((draft-buffer (generate-new-buffer "*org-draft*")))
+      (with-current-buffer draft-buffer
+        (org-mode)
+        (insert "?header")
+        (yas/expand))
+      (display-buffer draft-buffer nil t)
+      (setq composing-html-mail t)))
+
+  (defun htmlize-org-mail ()
+    "When in an org mail, htmlize it."
+    (interactive)
+    (when composing-html-mail
+      (setq composing-html-mail nil)
+      (org-mime-org-buffer-htmlize))))
+#+END_SRC
+
 * Packages & Tools
 ** =which-key=
 A useful package that displays the possible key combinations when you start a
@@ -1645,12 +1706,13 @@ the reference key plus suffix =.pdf=.
 #+BEGIN_SRC emacs-lisp
 (use-package ivy-bibtex
   :ensure t
-  ;:bind (("C-c ]" . ivy-bibtex))
   :config
 
   ;; ivy-bibtex requires ivy's `ivy--regex-ignore-order` regex builder, which
   ;; ignores the order of regexp tokens when searching for matching candidates.
   (add-to-list 'ivy-re-builders-alist '(ivy-bibtex . ivy--regex-ignore-order))
+
+  (setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation)
 
   ;; Library configuration
   (setq bibtex-completion-library-path '("~/Drive/org/bibliography/pdfs/"))
