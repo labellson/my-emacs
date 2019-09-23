@@ -1702,7 +1702,8 @@ special variables in ~.gitlab-ci.yml~ files.
 #+BEGIN_SRC emacs-lisp
 (use-package gitlab-ci-mode
   :ensure t
-  :hook (gitlab-ci-mode . flycheck-mode))
+  :hook ((gitlab-ci-mode . flycheck)
+         (gitlab-ci-mode . company-mode)))
 #+END_SRC
 
 Furthermore if you want the =Flycheck= integration with the linter included in
