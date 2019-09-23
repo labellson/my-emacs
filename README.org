@@ -1695,6 +1695,27 @@ pdf display keeps blinking. [[https://github.com/politza/pdf-tools/issues/201][x
 
   (magit-todos-mode))
 #+END_SRC
+** =gitlab-ci-mode=
+This major mode provides syntax highlighting and completion for keywords and
+special variables in ~.gitlab-ci.yml~ files.
+
+#+BEGIN_SRC emacs-lisp
+(use-package gitlab-ci-mode
+  :ensure t
+  :hook (gitlab-ci-mode . flycheck-mode))
+#+END_SRC
+
+Furthermore if you want the =Flycheck= integration with the linter included in
+=gitlab-ci-mode= you should install the next package.
+
+#+BEGIN_SRC emacs-lisp
+(use-package gitlab-ci-mode-flycheck
+  :ensure t
+  :after flycheck gitlab-ci-mode
+  :init
+  (gitlab-ci-mode-flycheck-enable))
+#+END_SRC
+
 ** =ivy-bibtex=
 I was using =helm= with =org-ref= in order to manage my bibliography. But this
 package allow you to search and manage your BibTeX bibliography using the
