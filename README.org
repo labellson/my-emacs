@@ -1249,7 +1249,7 @@ store emails into the agenda file.
   (setq mu4e-bookmarks
 		`( ,(make-mu4e-bookmark
 			 :name  "Unread messages"
-			 :query "flag:unread AND NOT flag:trashed AND NOT maildir:/fastmail/Spam"
+			 :query "flag:unread AND NOT flag:trashed AND NOT maildir:/fastmail/Spam AND NOT maildir:/fastmail/Trash"
 			 :key ?u)
 		   ,(make-mu4e-bookmark
 			 :name "Today's messages"
@@ -1285,7 +1285,7 @@ count of unread messages.
 
   (mu4e-alert-set-default-style 'libnotify)
   (setq mu4e-alert-interesting-mail-query
-		"flag:unread AND NOT flag:trashed AND NOT maildir:fastmail/Spam")
+		"flag:unread AND NOT flag:trashed AND NOT maildir:/fastmail/Spam AND NOT maildir:/fastmail/Trash")
 
   (setq mu4e-alert-modeline-formatter
 		'mu4e-alert-custom-mode-line-formatter)
