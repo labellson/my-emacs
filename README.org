@@ -58,6 +58,15 @@ maintenance of a configuration file.
   (require 'use-package))
 #+END_SRC
 
+** Set where is the emacs configuration repository
+This variable defines where this repository is located in your filesystem, as
+this variable is used later in the configuration. So yes, is where your Emacs
+configuration lives, so change it to where you store your conf files.
+
+#+BEGIN_SRC emacs-lisp
+(setq conf-dir "~/.my-emacs/")
+#+END_SRC
+
 ** TAB
 =<TAB>= key run indentation in most of the major mode. Sometimes, I want to
 =<TAB>= behaves as inserting a tab character. I can do this typing =C-q-<TAB>=
@@ -250,7 +259,7 @@ to define a new keybinding that automatically reloads that buffer.
 (defun open-emacs-configuration ()
   "Open the configuration.org file in buffer"
   (interactive)
-  (find-file "~/.my-emacs/README.org"))
+  (find-file (concat conf-dir "README.org")))
 
 (global-set-key (kbd "C-c c r") 'reload-emacs-configuration)
 (global-set-key (kbd "C-c c o") 'open-emacs-configuration)
