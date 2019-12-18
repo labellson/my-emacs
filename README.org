@@ -1819,6 +1819,17 @@ snippets I use are located into the =/snippets= folder of this repository.
   (yas-global-mode 1)
   (advice-add 'yas--auto-fill-wrapper :override #'ignore))
 #+END_SRC
+
+** =rainbow-delimiters=
+This package turns parenthesis into color pairs, which enhances your visual
+parenthesis matching skills.
+
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package rainbow-delimiters
+  :ensure t
+  :hook (prog-mode . rainbow-delimiters-mode))
+  #+END_SRC
+
 * Acknowledgments
 - Thanks to Diego Vicente. He discovered me Emacs and =org-mode=. Also, many
   aspects of my Emacs file are inspired by his [[https://github.com/DiegoVicen/my-emacs][config file]].
