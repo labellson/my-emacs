@@ -1794,6 +1794,7 @@ with ~p~ and with an external tool bounded to ~P~.
  'ivy-bibtex
  '(("P" ivy-bibtex-open-pdf-external "Open PDF file in Evince viewer (if present)")))
 #+END_SRC
+
 ** View Large Files
 =VLF= minor mode allows viewing, editing, searching and comparing large files
 in emacs. It divides the file on several batches and takes care of all the
@@ -1804,6 +1805,20 @@ operations for you allowing to edite smoothly the contents of the file.
   :ensure t)
 #+END_SRC
 
+** =yasnippets=
+This package is a template system for Emacs. It allows to type and abbreviation
+and automatically expand it into function templates using =TAB=. All the
+snippets I use are located into the =/snippets= folder of this repository.
+
+#+BEGIN_SRC emacs-lisp
+(use-package yasnippet
+  :ensure t
+  :config
+
+  (add-to-list 'yas-snippet-dirs (concat conf-dir "snippets"))
+  (yas-global-mode 1)
+  (advice-add 'yas--auto-fill-wrapper :override #'ignore))
+#+END_SRC
 * Acknowledgments
 - Thanks to Diego Vicente. He discovered me Emacs and =org-mode=. Also, many
   aspects of my Emacs file are inspired by his [[https://github.com/DiegoVicen/my-emacs][config file]].

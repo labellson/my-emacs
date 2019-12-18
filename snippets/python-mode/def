@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: def function(...):
+# key: def
+# --
+def ${1:funcname}(${2:arg}):
+    """
+
+    ${2:$(elpy-snippet-super-form yas-text)}
+    """
+    ${3:pass}
