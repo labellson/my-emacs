@@ -1830,6 +1830,25 @@ parenthesis matching skills.
   :hook (prog-mode . rainbow-delimiters-mode))
   #+END_SRC
 
+** =emacs-libvterm=
+I tried different packages in order to use a virtual terminal inside emacs, but
+none of them convinced me so that's why once again I'm trying a new
+one. =emacs-libvterm= provides a bridge to =libvterm= to display a terminal
+inside an emacs buffer.
+
+I'm very used to =vim= keybindings but I never got used to have it on the
+terminal. Deactivate it with the next command.
+
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package vterm
+  :ensure t
+  :bind (("C-c v" . vterm)
+         ("C-c 4 v" . vterm-other-window))
+  :config
+
+  (evil-set-initial-state 'vterm-mode 'emacs))
+  #+END_SRC
+
 * Acknowledgments
 - Thanks to Diego Vicente. He discovered me Emacs and =org-mode=. Also, many
   aspects of my Emacs file are inspired by his [[https://github.com/DiegoVicen/my-emacs][config file]].
