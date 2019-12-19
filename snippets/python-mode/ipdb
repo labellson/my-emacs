@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # name: ipdb.settrace()
 # key: ipdb
+# contributor: Daniel Laguna
 # --
-import ipdb
-ipdb.set_trace()
+__import__("ipdb").set_trace()
