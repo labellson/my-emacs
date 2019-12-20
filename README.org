@@ -1149,6 +1149,19 @@ With this option all the =CLOCKS= will be grouped into a =:CLOCKING:= entry
 (setq org-clock-into-drawer t)
 #+END_SRC
 
+** Disable lisp =flycheck= checker in =org-src-mode= 
+I receive an annoying warning all the time from =flycheck= when I try to edit
+lisp snippets. The checker treats them as a lisp package, but they are just
+snippets. With the next *snippet* you can deactivate this warnings in every
+snippet edited in org-mode.
+
+#+BEGIN_SRC emacs-lisp :results silent
+(defun disable-flycheck-in-org-src-block ()
+  (setq-local flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
+
+(add-hook 'org-src-mode-hook 'disable-flycheck-in-org-src-block)
+#+END_SRC
+
 * Other major modes
 ** Evil mode
 I'm very used to =Vim= and prefer its keybindings over the Emacs
