@@ -649,6 +649,28 @@ The next lines are just some emacs packages that will help you to write your
   :ensure t)
 #+END_SRC
 
+** Emacs Lisp and Lisp
+It is time to learn something about Lisp and Emacs Lisp. I feel comfortable
+using Emacs, but I want to be able to write my own functions. Let's set up some
+sort of configuration that let me develop in this language.
+
+=ParEdit= is a minor mode for performing structured editing of S-expression
+data. Will keep your parentheses balanced. You will never mess around again
+deleting matching parenthesis by mistake. Also add the =evil= flavor to
+workaround =evil= modifier commands.
+
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package paredit
+  :ensure t
+  :hook ((emacs-lisp-mode . paredit-mode)
+         (lisp-mode . paredit-mode)))
+
+(use-package evil-paredit
+  :ensure t
+  :hook ((emacs-lisp-mode . evil-paredit-mode)
+         (lisp-mode . evil-paredit-mode)))
+  #+END_SRC 
+
 ** Web development
 This is not my target but sometimes I have to deal with some web development. I
 found this [[https://github.com/fxbois/web-mode][web-mode]] package that makes easier the web development with
