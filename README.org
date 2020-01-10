@@ -1263,6 +1263,16 @@ searches.
 	(kbd "C-w C-w") 'other-window))
 #+END_SRC
 
+Disable the =evil-repeat-pop-next= and other commands that I don't use.
+
+#+BEGIN_SRC emacs-lisp :results silent
+(eval-after-load "evil-maps"
+  '(progn
+     (define-key evil-normal-state-map "\M-." nil)
+     (define-key evil-motion-state-map "(" nil)
+     (define-key evil-motion-state-map ")" nil)))
+#+END_SRC
+
 ** =mu4e=
 =mu= is a simple command line tool for searching through emails. It's a cute
 little tool and is especially nice for allowing you to quickly check for any
