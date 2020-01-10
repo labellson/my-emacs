@@ -290,6 +290,40 @@ Vim.
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 #+END_SRC
+
+** Setting default font
+I used *Monaco* or *Dejavu Sans* for years and I really liked. Even this last
+year I tried *Source Code Pro* that I liked too. This time I want to give a try
+to something different as [[https://github.com/belluzj/fantasque-sans][Fantasque Sans Mono]]. As the author describe it is a
+programming font designed with functionality in mind, and with some
+wibbly-wobbly handwriting-like fuzziness that makes it unassumingly cool.
+
+In order to set the font globally in Emacs run the following.
+
+#+BEGIN_SRC emacs-lisp :results silent
+(set-face-attribute 'default nil :font "Fantasque Sans Mono 11")
+(set-frame-font "Fantasque Sans Mono 11" nil t)
+#+END_SRC
+
+The font is not set when Emacs runs in daemon mode. Call add a callback in
+~after-make-frame-functions~. This functions are called when a new frame is
+created.
+
+#+BEGIN_SRC emacs-lisp :results silent
+(defun set-custom-font (frame)
+  (interactive)
+  (set-face-attribute 'default frame
+                      :font "Fantasque Sans Mono 11")
+  (set-face-attribute 'variable-pitch frame
+                      :font "Fantasque Sans Mono 11")
+  (set-face-attribute 'fixed-pitch frame
+                      :font "Fantasque Sans Mono 11")
+  (set-face-attribute 'tooltip frame
+                      :font "Fantasque Sans Mono 11"))
+
+(add-to-list 'after-make-frame-functions 'set-custom-font t)
+#+END_SRC
+
 ** Highlight changed and uncommited lines
 Use the =git-gutter-fringe= package for that. I have it activated for
 =prog-mode= and =org-mode=.
