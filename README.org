@@ -896,7 +896,7 @@ add some workflow states to the default *TODO* | *DONE* defined on Emacs
 
 #+BEGIN_SRC emacs-lisp
 (setq org-todo-keywords
-	  '((sequence "TODO" "IN-PROGRESS" "WAITING" "|" "DONE" "CANCELED")))
+	  '((sequence "TODO(t)" "IN-PROGRESS(p)" "WAITING(w)" "|" "DONE(d)" "CANCELED(c)")))
 #+END_SRC
 
 Also setting this keybinding allows me take quick looks to the agenda by week.
