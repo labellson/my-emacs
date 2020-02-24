@@ -1448,6 +1448,20 @@ Emacs side.
       (org-mime-org-buffer-htmlize))))
 #+END_SRC
 
+** =markdown-mode=
+Since my change to Emacs I tend to set aside =Markdown=, thus writing my markup
+documents in =org-mode=. However, once in a while, I still have to write in
+this markup language. This bare minimal configuration will help to write those
+documents.
+
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package markdown-mode
+  :ensure t
+  :after flyspell
+  :hook ((markdown-mode . auto-fill-mode)
+         (markdown-mode . flyspell-mode)))
+  #+END_SRC
+
 * Packages & Tools
 ** =which-key=
 A useful package that displays the possible key combinations when you start a
