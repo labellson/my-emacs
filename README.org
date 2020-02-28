@@ -1244,7 +1244,6 @@ searches.
 
     (evil-leader/set-leader "<SPC>")
     (evil-leader/set-key
-      "x" 'counsel-M-x
       "<SPC>" 'evil-search-highlight-persist-remove-all
 	  "i" 'counsel-imenu))
 
