@@ -1461,6 +1461,30 @@ documents.
          (markdown-mode . flyspell-mode)))
   #+END_SRC
 
+** =csv-mode=
+This mode allows markup and alignment of or =.csv= files. Due to some files are
+too big, this configuration comes with a function to only align the visible
+part of the file.
+
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package csv-mode
+  :ensure t
+  :config
+
+  (setq csv-align-padding 2)
+
+  (defun csv-align-visible ()
+    "Align only visible entries in csv-mode"
+    (interactive)
+    (csv-align-fields nil
+                      (window-start (selected-window))
+                      (window-end (selected-window)))
+    (message "Aligned visible fields only. Press C-c C-w to align again."))
+
+  :bind (:map csv-mode-map ("C-c C-w" . 'csv-align-visible))
+  :hook (csv-mode . csv-align-visible))
+  #+END_SRC
+
 * Packages & Tools
 ** =which-key=
 A useful package that displays the possible key combinations when you start a
