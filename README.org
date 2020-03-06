@@ -1974,6 +1974,25 @@ terminal. Deactivate it with the next command.
   (evil-set-initial-state 'vterm-mode 'emacs))
   #+END_SRC
 
+** SQL mode
+Emacs come with a built-in =sql-mode= that interacts with different
+databases. Configuration is pretty straightforward. This [[https://truongtx.me/2014/08/23/setup-emacs-as-an-sql-database-client][link]] describes how to
+configure it.
+
+#+BEGIN_SRC emacs-lisp :results silent
+(setq sql-postgres-login-params
+      '((user :default "postgres")
+        (database :default "postgres")
+        (server :default "localhost")
+        (port :default 5432)))
+
+(add-hook 'sql-interactive-mode-hook
+          (lambda ()
+            (toggle-truncate-lines t)))
+
+(evil-set-initial-state 'sql-interactive-mode 'emacs)
+#+END_SRC
+
 * Acknowledgments
 - Thanks to Diego Vicente. He discovered me Emacs and =org-mode=. Also, many
   aspects of my Emacs file are inspired by his [[https://github.com/DiegoVicen/my-emacs][config file]].
