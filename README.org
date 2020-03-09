@@ -1760,11 +1760,13 @@ Also, the =counsel-projectile= extension adds integration with =ivy=.
 already with support for a lot of languages and can also use other packages as
 backend.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :results silent
 (use-package flycheck
   :ensure t
   :hook (prog-mode . flycheck-mode)
   :config
+
+  (setq flycheck-python-mypy-ini "~/.config/mypy/config")
 
   (set-face-underline 'flycheck-error '(:color "Red1" :style line))
   (set-face-underline 'flycheck-warning '(:color "#e5aa00" :style line))
