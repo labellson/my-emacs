@@ -1229,6 +1229,8 @@ searches.
 #+BEGIN_SRC emacs-lisp
 (use-package evil
   :ensure t
+  :init
+  (setq evil-want-keybinding nil)  ;; Needed by evil-collection
   :config
 
   (evil-mode 1)
@@ -1261,6 +1263,17 @@ searches.
 	(kbd "C-u")     'evil-scroll-up
 	(kbd "C-w C-w") 'other-window))
 #+END_SRC
+
+This package adds a collection of Evil bindings that =Evil= does not cover by
+default. 
+
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package evil-collection
+  :ensure t
+  :after evil
+  :config
+  (evil-collection-init))
+  #+END_SRC
 
 Disable the =evil-repeat-pop-next= and other commands that I don't use.
 
