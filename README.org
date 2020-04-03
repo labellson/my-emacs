@@ -347,13 +347,16 @@ opinion, =solarized= doesn't looks pretty on =vim=. But looks sexy on =emacs=.
   :ensure t
   :init
   (setq solarized-use-variable-pitch nil)
+  (setq solarized-scale-org-headlines nil)
   :config
   (load-theme 'solarized-light t)
   (set-face-attribute 'org-block nil :background "#f9f2d9"))
 #+END_SRC
 
 ** Disable splitting frames to creating frames
-This functionality is to be used along i3wm in order to delegate window management to i3 completely. There is also a couple of functions that must be overriden in order to make everything work seamlessly.
+This functionality is to be used along i3wm in order to delegate window
+management to i3 completely. There is also a couple of functions that must be
+overriden in order to make everything work seamlessly.
 
 #+BEGIN_SRC emacs-lisp
 ;; Fix quit-window definitions to get rid of buffers
