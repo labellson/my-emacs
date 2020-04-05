@@ -686,34 +686,31 @@ files.
   :hook (html-mode . web-mode))
 #+END_SRC
 
-*** Javascript and React
+*** Javascript, Typescript and React
 This package is useful in order to check the syntax and help you while you
-write =Javascript= code.
+write =Javascript= code. In Emacs 27 =j2-mode= supports React =.jsx= so is
+activated as a minor mode when =web-mode= or =js-mode= are activated.
 
 #+BEGIN_SRC emacs-lisp
 (use-package js2-mode
   :ensure t
-  :hook (web-mode . js2-minor-mode)
-  :config
-
-  (add-to-list 'auto-mode-alist '("\\.jsx?$" . web-mode)))
+  :hook ((web-mode js-mode) . js2-minor-mode))
 #+END_SRC
 
-*** =company-tern=
-Thanks to =Tern= Javascript analyzer is possible to have =company= completions
-for Javascript.
+=Tide= stands for /TypeScript Interactive Development Environment/ for
+Emacs. Provides completion, linting and formatting for =JavaScript=,
+=TypeScript= and =JSX=. Needs the =tide= server as a dependency and a
+=jsconfig.json= file per project. Check the [[https://github.com/ananthakumaran/tide#javascript][tide repository]] for more info.
 
-*For some reason company don't load the tern backend*
-    
-#+BEGIN_SRC emacs-lisp
-(use-package company-tern
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package tide
   :ensure t
-  :hook (js2-minor-mode . tern-mode)
-  :config
+  :after (js2-mode company flycheck)
+  :hook ((js2-minor-mode . tide-setup)
+         (js2-minor-mode . tide-hl-identifier-mode))
 
-  ; For some reason this line is not being evaluated
-  (eval-after-load 'company '(add-to-list 'company-backends
-    'company-tern)))
+  :config
+  (flycheck-add-next-checker 'javascript-eslint 'javascript-tide 'append))
 #+END_SRC
 
 ** Docker files
