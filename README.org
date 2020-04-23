@@ -1348,22 +1348,27 @@ store emails into the agenda file.
 		shr-width 79)
 
   (setq mu4e-bookmarks
-		`( ,(make-mu4e-bookmark
-			 :name  "Unread messages"
-			 :query "flag:unread AND NOT flag:trashed AND NOT maildir:/fastmail/Spam AND NOT maildir:/fastmail/Trash"
-			 :key ?u)
-		   ,(make-mu4e-bookmark
-			 :name "Today's messages"
-			 :query "date:today..now"
-			 :key ?t)
-		   ,(make-mu4e-bookmark
-			 :name "Last 7 days"
-			 :query "date:7d..now"
-			 :key ?w)
-		   ,(make-mu4e-bookmark
-			 :name "Inbox"
-			 :query "maildir:/fastmail/INBOX"
-			 :key ?i))))
+		'((:name "Unread messages"
+		   :query "flag:unread AND NOT flag:trashed AND NOT maildir:/fastmail/Spam AND NOT maildir:/fastmail/Trash"
+		   :key ?u)
+		  (:name "Today's messages"
+		   :query "date:today..now"
+		   :key ?t)
+		  (:name "Last 7 days"
+		   :query "date:7d..now"
+		   :key ?w)
+		  (:name "Inbox"
+		   :query "maildir:/fastmail/INBOX"
+		   :key ?i)
+          (:name "Neerlandes"
+           :query "maildir:/fastmail/Neerlandes"
+           :key ?n)
+          (:name "Jobs"
+           :query "maildir:/fastmail/Jobs"
+           :key ?j)
+          (:name "NLGov"
+           :query "maildir:/fastmail/NLGov"
+           :key ?g))))
 #+END_SRC
 
 As I use =evil-mode=, lets enable =vim-like= keystrokes inside =mu4e=.
