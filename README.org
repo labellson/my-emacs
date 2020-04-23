@@ -694,7 +694,8 @@ activated as a minor mode when =web-mode= or =js-mode= are activated.
 #+BEGIN_SRC emacs-lisp
 (use-package js2-mode
   :ensure t
-  :hook ((web-mode js-mode) . js2-minor-mode))
+  :hook ((web-mode js-mode) . js2-minor-mode)
+  :config (setq js-indent-level 2))
 #+END_SRC
 
 =Tide= stands for /TypeScript Interactive Development Environment/ for
