@@ -85,8 +85,8 @@ white spaces indentation so I deactivated the tab based indentation.
 ** Set window title to buffer name
 With this option the window title will be as the filename or like the name of
 the unsaved buffer. Handy when you want to classify =*Emacs Anywhere*= unsaved
-buffers and set as floating panes within i3. 
-   
+buffers and set as floating panes within i3.
+
 #+BEGIN_SRC emacs-lisp
 (setq frame-title-format '("%b"))
 #+END_SRC
@@ -105,8 +105,8 @@ I prefer to have a scratch buffer ready when booting up with =org-mode= running
 
 #+BEGIN_SRC emacs-lisp
 (setq inhibit-splash-screen t
-	  initial-scratch-message nil
-	  initial-major-mode 'org-mode)
+      initial-scratch-message nil
+      initial-major-mode 'org-mode)
 #+END_SRC
 
 ** Disable the warning when killing a buffer with process
@@ -115,8 +115,8 @@ kill it asking for confirmation. I preferred to disable this behaviour.
 
 #+BEGIN_SRC emacs-lisp
 (setq kill-buffer-query-functions
-	  (remq 'process-kill-buffer-query-function
-			 kill-buffer-query-functions))
+      (remq 'process-kill-buffer-query-function
+             kill-buffer-query-functions))
 #+END_SRC
 
 ** Fix scroll
@@ -127,14 +127,14 @@ smooth scolling.
 #+BEGIN_SRC emacs-lisp
 (setq scroll-step            1
       scroll-conservatively  10000
-	  mouse-wheel-scroll-amount '(1 ((shift) . 1))
+      mouse-wheel-scroll-amount '(1 ((shift) . 1))
       mouse-wheel-progressive-speed nil
       mouse-wheel-follow-mouse 't)
 #+END_SRC
 
 ** Wrap lines
 Setting this value, the lines will wrap in all buffers when collapsing.
-   
+
 #+BEGIN_SRC emacs-lisp
 (global-visual-line-mode t)
 #+END_SRC
@@ -145,11 +145,11 @@ from polluting everywhere.
 
 #+BEGIN_SRC emacs-lisp
 (setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
-	  backup-by-copying t
-	  version-control t
-	  delete-old-versions t
-	  kept-new-versions 20
-	  kept-old-versions 5)
+      backup-by-copying t
+      version-control t
+      delete-old-versions t
+      kept-new-versions 20
+      kept-old-versions 5)
 #+END_SRC
 
 ** Auto-fill comments
@@ -204,7 +204,7 @@ DELTA should be a multiple of 10, in the units used by the
 (global-set-key (kbd "C-M--") 'decrease-default-font-height)
 #+END_SRC
 
-** Add functions to determine system 
+** Add functions to determine system
 One liner functions to know in which system we are running.
 
 #+BEGIN_SRC emacs-lisp
@@ -223,7 +223,7 @@ One liner functions to know in which system we are running.
 (defun system-is-windows ()
   (interactive)
   (or (string-equal system-name "windows-nt")
-	  (string-equal system-name "cygwin")))
+      (string-equal system-name "cygwin")))
 #+END_SRC
 
 ** Tramp configuration
@@ -416,7 +416,7 @@ active minor modes.
   :config
 
   (setq x-underline-at-descent-line t
-		column-number-mode t)
+        column-number-mode t)
 
   (moody-replace-mode-line-buffer-identification)
   (moody-replace-vc-mode)
@@ -432,7 +432,7 @@ active minor modes.
 
 ** Highlight matching parenthesis
 As the title says, this mode highlight matching parenthesis under the cursor
- 
+
 #+BEGIN_SRC emacs-lisp
 (setq show-paren-delay 0)
 (show-paren-mode 1)
@@ -459,7 +459,7 @@ Add =company-tng-frontend= if you like YCM Vim completion :P
         (define-key company-active-map [tab] 'company-complete-common-or-cycle)
         (define-key company-active-map (kbd "S-TAB") 'company-select-previous)
         (define-key company-active-map (kbd "<backtab>") 'company-select-previous)
-        
+
         (define-key company-mode-map (kbd "C-<SPC>") 'company-complete))))
 #+END_SRC
 
@@ -473,11 +473,11 @@ with =company-capf= backend.
     (eval-after-load 'company
       (company-flx-mode +1)))
 #+END_SRC
-   
+
 ** C/C++
 I've been using *NeoVim* with =YouCompleteMe= for C/C++ development. But, I
 want to change my default text editor to emacs. So, this section sums up my
-research on C/C++ related emacs packages. 
+research on C/C++ related emacs packages.
 
 First of all lets set the indentation mode to the one you are used
 to. Personally I prefer the one Stroustrup follows.
@@ -505,26 +505,26 @@ to generate the tags database calling ~gtags~ on top of the project.
   :ensure t
   :hook (c++-mode . ggtags-mode)
   :bind (:map ggtags-mode-map
-		 ("C-c g s" . ggtags-find-other-symbol)
-		 ("C-c g h" . ggtags-view-tag-history)
-		 ("C-c g r" . ggtags-find-reference)
-		 ("C-c g f" . ggtags-find-file)
-		 ("C-c g c" . ggtags-create-tags)
-		 ("C-c g u" . ggtags-update-tags)
-		 ("M-," . pop-tag-mark))
+         ("C-c g s" . ggtags-find-other-symbol)
+         ("C-c g h" . ggtags-view-tag-history)
+         ("C-c g r" . ggtags-find-reference)
+         ("C-c g f" . ggtags-find-file)
+         ("C-c g c" . ggtags-create-tags)
+         ("C-c g u" . ggtags-update-tags)
+         ("M-," . pop-tag-mark))
   :config
 
   (setq-local imenu-create-index-function #'ggtags-build-imenu-index))
 #+END_SRC
-	
+
 *** Header completion with =company-c-headers=
-This backend provides header completion from *system* headers 
+This backend provides header completion from *system* headers
 ~#include <header>~ and *user* provided per project ~#include "header"~.
 
 In order to say where the backend have to look for the headers, you have to add
 the system paths to the list ~company-c-headers-path-system~. And also per
 project to the list ~company-c-headers-path-user~.
-	
+
 #+BEGIN_SRC emacs-lisp
 (use-package company-c-headers
   :ensure t
@@ -546,7 +546,7 @@ parsers.
 
 ;(add-hook 'c++-mode-hook (lambda () (semantic-mode)))
 #+END_SRC
-	
+
 *** =irony=
 
 #+BEGIN_SRC emacs-lisp
@@ -589,7 +589,7 @@ I've set a global =tab-width= in basic emacs setup. But it seems not working in
 =elpy= provides IDE-kind functionality for Emacs. Right now is the best python
 package I tried for emacs. It comes with =flymake= as default syntax checker
 though. I deactivated it in favor of =flycheck=.
-   
+
 #+BEGIN_SRC emacs-lisp
 (use-package elpy
   :ensure t
@@ -625,7 +625,7 @@ emacs. This allows use all the emacs features inside the notebooks.
 (use-package ein
   :ensure t
   :hook (ein:notebook-multilang-mode
-		 . (lambda () (ws-butler-mode -1) (visual-line-mode)))
+         . (lambda () (ws-butler-mode -1) (visual-line-mode)))
   :custom-face
   (ein:cell-input-area ((t (:background "#f9f2d9")))))
 #+END_SRC
@@ -636,7 +636,7 @@ provides a variant of =Python= syntax such as optional static type declarations
 (this is not the same as =mypy=) that provides speed improvements when the code
 is compiled. Therefore, all the =Cython= code you write is compiled to =.c=
 files and then a =C= compiler compiles it to a shared library =.so= which can
-be imported directly into the normal =CPython= interpreter. 
+be imported directly into the normal =CPython= interpreter.
 
 In order to be able to compile =Cython= code you will need to write a
 distutils/setuptools =setup.py= file. You can read about how to do it [[http://docs.cython.org/en/latest/src/quickstart/build.html][here]].
@@ -672,7 +672,7 @@ workaround =evil= modifier commands.
   :ensure t
   :hook ((emacs-lisp-mode . evil-paredit-mode)
          (lisp-mode . evil-paredit-mode)))
-  #+END_SRC 
+  #+END_SRC
 
 ** Web development
 This is not my target but sometimes I have to deal with some web development. I
@@ -761,7 +761,7 @@ In order to get support for many other =LaTeX= packages you have to enable
 document parsing. If you also use ~\include~ you also should make =AUCTeX=
 aware of the multi-file document structure. Each time you open a new file
 =AUCTeX= will ask you for a master file.
- 
+
 #+BEGIN_SRC emacs-lisp
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
@@ -799,7 +799,7 @@ buffer *after* the TeX compilation has finished.
 (add-hook 'LaTeX-mode-hook 'flyspell-buffer)
 #+END_SRC
 
-*** Enable =auto-fill= for TeX edition 
+*** Enable =auto-fill= for TeX edition
 #+BEGIN_SRC emacs-lisp
 (add-hook 'LaTeX-mode-hook 'auto-fill-mode)
 #+END_SRC
@@ -815,7 +815,7 @@ Add the backend enable auto-completion for LaTeX files.
 
   (company-auctex-init))
 #+END_SRC
-   
+
 ** =hideshow=
 This minor mode provides selectively folding for code and comment
 blocks. Blocks are defined per mayor mode. It cames pre-configured with default
@@ -835,7 +835,7 @@ this config. This [[https://emacs.stackexchange.com/questions/2884/the-old-how-t
                "-->\\|</[^/>]*[^/]>"
 
                "<!--"
-			   nxml-forward-element
+               nxml-forward-element
                nil))
 )
 
@@ -897,14 +897,14 @@ add some workflow states to the default *TODO* | *DONE* defined on Emacs
 
 #+BEGIN_SRC emacs-lisp
 (setq org-todo-keywords
-	  '((sequence "TODO(t)" "IN-PROGRESS(p)" "WAITING(w)" "|" "DONE(d)" "CANCELED(c)")))
+      '((sequence "TODO(t)" "IN-PROGRESS(p)" "WAITING(w)" "|" "DONE(d)" "CANCELED(c)")))
 #+END_SRC
 
 Also setting this keybinding allows me take quick looks to the agenda by week.
 
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-c t a") 'org-agenda-list)
-#+END_SRC   
+#+END_SRC
 
 In order to add items to the agenda from anywhere in Emacs, we need to use
 =org-capture=. When you call it, a split will prompt asking you to select a
@@ -913,9 +913,9 @@ so lets define one along with a keybinging to call it.
 
 #+BEGIN_SRC emacs-lisp
 (setq org-capture-templates
-	  '(("a" "My TODO task format." entry
-		 (file "agenda.org")
-		 "* TODO %?
+      '(("a" "My TODO task format." entry
+         (file "agenda.org")
+         "* TODO %?
 SCHEDULED: %t")))
 
 (defun my-org-task-capture ()
@@ -999,9 +999,9 @@ fail to evaluate them.
 #+BEGIN_SRC emacs-lisp
 (eval-after-load 'org-agenda
   '(progn
-	 (define-key org-agenda-mode-map "j" 'org-agenda-next-item)
-	 (define-key org-agenda-mode-map "k" 'org-agenda-previous-item)
-	 (define-key org-agenda-mode-map "c" 'my-org-agenda-capture)))
+     (define-key org-agenda-mode-map "j" 'org-agenda-next-item)
+     (define-key org-agenda-mode-map "k" 'org-agenda-previous-item)
+     (define-key org-agenda-mode-map "c" 'my-org-agenda-capture)))
 #+END_SRC
 
 ** Agenda custom commands
@@ -1080,15 +1080,15 @@ main .bib bibliography and the directory where the PDFs can be downloaded to.
   (setq org-src-preserve-indentation t)
 
   (setq org-latex-default-packages-alist
-	(-remove-item
-	 '("" "hyperref" nil)
-	 org-latex-default-packages-alist))
+    (-remove-item
+     '("" "hyperref" nil)
+     org-latex-default-packages-alist))
 
   (add-to-list 'org-latex-default-packages-alist '("" "natbib" "") t)
   (add-to-list 'org-latex-default-packages-alist
-	       '("linktocpage,pdfstartview=FitH,colorlinks,linkcolor=black,anchorcolor=black,citecolor=black,filecolor=blue,menucolor=black,urlcolor=blue"
-		 "hyperref" nil)
-	       t)
+           '("linktocpage,pdfstartview=FitH,colorlinks,linkcolor=black,anchorcolor=black,citecolor=black,filecolor=blue,menucolor=black,urlcolor=blue"
+         "hyperref" nil)
+           t)
 
   (progn
     (setq org-ref-bibliography-notes "~/Drive/org/bibliography/notes.org"
@@ -1142,7 +1142,7 @@ We need to manually enable the export to Beamer option
 
 ** Custom ellipsis
 Custom ellipsis to use in the =org-mode= heading outline.
-   
+
 #+BEGIN_SRC emacs-lisp
 (setq org-ellipsis " \u2935")
 #+END_SRC
@@ -1150,7 +1150,7 @@ Custom ellipsis to use in the =org-mode= heading outline.
 This setting will prettify latex symbols like (~x_{subscript}~) and
 superscripts (~x^{superscript}~). As a consequence, they will appear in =org=
 as visual symbols.
-   
+
 #+BEGIN_SRC emacs-lisp
 (setq-default org-pretty-entities t)
 #+END_SRC
@@ -1165,7 +1165,7 @@ system, remote address using ~org-download-yank~ or a screenshot using
 
 (add-hook 'dired-mode-hook 'org-download-enable)
 #+END_SRC
-   
+
 ** Use syntax highlight in source blocks
 When writing source code on a block, if this variable is enabled it will use
 the same syntax highlight as the mode supposed to deal with it.
@@ -1206,7 +1206,7 @@ With this option all the =CLOCKS= will be grouped into a =:CLOCKING:= entry
 (setq org-clock-into-drawer t)
 #+END_SRC
 
-** Disable lisp =flycheck= checker in =org-src-mode= 
+** Disable lisp =flycheck= checker in =org-src-mode=
 I receive an annoying warning all the time from =flycheck= when I try to edit
 lisp snippets. The checker treats them as a lisp package, but they are just
 snippets. With the next *snippet* you can deactivate this warnings in every
@@ -1226,7 +1226,7 @@ ones. =Evil-mode= provides keybindings and emulates the main features of =Vim=.
 
 This configuration enables leader key function and highlihgt persistence on
 searches.
-   
+
 #+BEGIN_SRC emacs-lisp
 (use-package evil
   :ensure t
@@ -1248,25 +1248,25 @@ searches.
     (evil-leader/set-leader "<SPC>")
     (evil-leader/set-key
       "<SPC>" 'evil-search-highlight-persist-remove-all
-	  "i" 'counsel-imenu))
+      "i" 'counsel-imenu))
 
   (use-package evil-search-highlight-persist
    :ensure t
    :config
    (global-evil-search-highlight-persist t))
 
-	;; Add these evil keybindings in Emacs mode
-	(evil-add-hjkl-bindings occur-mode-map 'emacs
-	(kbd "/")       'evil-search-forward
-	(kbd "n")       'evil-search-next
-	(kbd "N")       'evil-search-previous
-	(kbd "C-d")     'evil-scroll-down
-	(kbd "C-u")     'evil-scroll-up
-	(kbd "C-w C-w") 'other-window))
+    ;; Add these evil keybindings in Emacs mode
+    (evil-add-hjkl-bindings occur-mode-map 'emacs
+    (kbd "/")       'evil-search-forward
+    (kbd "n")       'evil-search-next
+    (kbd "N")       'evil-search-previous
+    (kbd "C-d")     'evil-scroll-down
+    (kbd "C-u")     'evil-scroll-up
+    (kbd "C-w C-w") 'other-window))
 #+END_SRC
 
 This package adds a collection of Evil bindings that =Evil= does not cover by
-default. 
+default.
 
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package evil-collection
@@ -1322,44 +1322,44 @@ store emails into the agenda file.
 
   ;; Set mu4e as default mail user agent
   (setq mail-user-agent 'mu4e-user-agent)
-  
+
   ;; Set the default Maildir folders
   (setq mu4e-maildir "~/.maildir"
-		mu4e-sent-folder "/fastmail/Sent"
-		mu4e-drafts-folder "/fastmail/Drafts"
-		mu4e-trash-folder "/fastmail/Trash"
-		mu4e-refile-folder "/fastmail/Archive"
-		mu4e-completing-read-function 'ivy-completing-read
-		mu4e-confirm-quit nil
-		mu4e-kill-buffer-on-exit t
-		smtpmail-stream-type 'ssl
-		smtpmail-smtp-server "smtp.fastmail.com"
-		smtpmail-smtp-service 465)
+        mu4e-sent-folder "/fastmail/Sent"
+        mu4e-drafts-folder "/fastmail/Drafts"
+        mu4e-trash-folder "/fastmail/Trash"
+        mu4e-refile-folder "/fastmail/Archive"
+        mu4e-completing-read-function 'ivy-completing-read
+        mu4e-confirm-quit nil
+        mu4e-kill-buffer-on-exit t
+        smtpmail-stream-type 'ssl
+        smtpmail-smtp-server "smtp.fastmail.com"
+        smtpmail-smtp-service 465)
 
   (setq send-mail-function 'smtpmail-send-it
-		message-send-mail-function 'smtpmail-send-it)
+        message-send-mail-function 'smtpmail-send-it)
 
   (setq	mu4e-view-date-format "%a %e %b %Y %T"
-		mu4e-headers-date-format "%d/%m/%Y"
-		mu4e-headers-time-format "%T"
-		mu4e-view-prefer-html t
-		shr-use-colors nil
-		shr-use-fonts nil
-		shr-width 79)
+        mu4e-headers-date-format "%d/%m/%Y"
+        mu4e-headers-time-format "%T"
+        mu4e-view-prefer-html t
+        shr-use-colors nil
+        shr-use-fonts nil
+        shr-width 79)
 
   (setq mu4e-bookmarks
-		'((:name "Unread messages"
-		   :query "flag:unread AND NOT flag:trashed AND NOT maildir:/fastmail/Spam AND NOT maildir:/fastmail/Trash"
-		   :key ?u)
-		  (:name "Today's messages"
-		   :query "date:today..now"
-		   :key ?t)
-		  (:name "Last 7 days"
-		   :query "date:7d..now"
-		   :key ?w)
-		  (:name "Inbox"
-		   :query "maildir:/fastmail/INBOX"
-		   :key ?i)
+        '((:name "Unread messages"
+           :query "flag:unread AND NOT flag:trashed AND NOT maildir:/fastmail/Spam AND NOT maildir:/fastmail/Trash"
+           :key ?u)
+          (:name "Today's messages"
+           :query "date:today..now"
+           :key ?t)
+          (:name "Last 7 days"
+           :query "date:7d..now"
+           :key ?w)
+          (:name "Inbox"
+           :query "maildir:/fastmail/INBOX"
+           :key ?i)
           (:name "Neerlandes"
            :query "maildir:/fastmail/Neerlandes"
            :key ?n)
@@ -1391,17 +1391,17 @@ count of unread messages.
 
   (mu4e-alert-set-default-style 'libnotify)
   (setq mu4e-alert-interesting-mail-query
-		"flag:unread AND NOT flag:trashed AND NOT maildir:/fastmail/Spam AND NOT maildir:/fastmail/Trash")
+        "flag:unread AND NOT flag:trashed AND NOT maildir:/fastmail/Spam AND NOT maildir:/fastmail/Trash")
 
   (setq mu4e-alert-modeline-formatter
-		'mu4e-alert-custom-mode-line-formatter)
+        'mu4e-alert-custom-mode-line-formatter)
 
   (defun mu4e-alert-custom-mode-line-formatter (mail-count)
-	"Custom formatter used to get the string to be displayed in the
+    "Custom formatter used to get the string to be displayed in the
 mode-line.Uses Font Awesome mail icon to have a more visual icon
 in the display.  MAIL-COUNT is the count of mails for which the
 string is to displayed"
-	(when (not (zerop mail-count))
+    (when (not (zerop mail-count))
       (concat " "
               (propertize
                ""
@@ -1410,7 +1410,7 @@ string is to displayed"
                'face display-time-mail-face
                'help-echo (concat (if (= mail-count 1)
                                       "You have an unread email"
-									(format "You have %s unread emails" mail-count))
+                                    (format "You have %s unread emails" mail-count))
                                   "\nClick here to view "
                                   (if (= mail-count 1) "it" "them"))
                'mouse-face 'mode-line-highlight
@@ -1420,7 +1420,7 @@ string is to displayed"
                                    (mouse-3 . mu4e-alert-view-unread-mails)))
               (if (zerop mail-count)
                   " "
-				(format " [%d] " mail-count))))))
+                (format " [%d] " mail-count))))))
 #+END_SRC
 
 Also, I define a custom function so that updating the mail is possible just by pinging the Emacs daemon. I have this function called as a post-hook every time the offlineimap is called.
@@ -1606,7 +1606,7 @@ sorting function.
   "Sort dired listings with directories first."
   (save-excursion
     (let (buffer-read-only)
-      (forward-line 2) ;; beyond dir. header 
+      (forward-line 2) ;; beyond dir. header
       (sort-regexp-fields t "^.*$" "[ ]*." (point) (point-max)))
     (set-buffer-modified-p nil)))
 
@@ -1624,18 +1624,18 @@ good option is to use =buffer-move= package and use these key bindings.
 (use-package buffer-move
   :ensure t
   :bind (("C-x w <up>"    . buf-move-up)
-		 ("C-x w <down>"  . buf-move-down)
-		 ("C-x w <left>"  . buf-move-left)
-		 ("C-x w <right>" . buf-move-right)
-		 ("C-x w k"       . buf-move-up)
-		 ("C-x w j"       . buf-move-down)
-		 ("C-x w h"       . buf-move-left)
-		 ("C-x w l"       . buf-move-right)))
+         ("C-x w <down>"  . buf-move-down)
+         ("C-x w <left>"  . buf-move-left)
+         ("C-x w <right>" . buf-move-right)
+         ("C-x w k"       . buf-move-up)
+         ("C-x w j"       . buf-move-down)
+         ("C-x w h"       . buf-move-left)
+         ("C-x w l"       . buf-move-right)))
 #+END_SRC
 
 ** Relative margin line numbers
 This setting enables the margin line numbers with the relative number mode.
- 
+
 #+BEGIN_SRC emacs-lisp
 (use-package nlinum-relative
   :ensure t
@@ -1685,7 +1685,7 @@ spell checking language.
 
 The last two lines prevents =ispell= to check inside =org= source blocks and
 sections.
-   
+
 #+BEGIN_SRC emacs-lisp
 (use-package flyspell
   :ensure t
@@ -1693,13 +1693,13 @@ sections.
   :config
 
   (when (executable-find "aspell")
-	(setq ispell-program-name "aspell"
+    (setq ispell-program-name "aspell"
           ispell-dictionary "american"))
 
   (set-face-underline 'flyspell-incorrect
-					  '(:color "#dc322f" :style line))
+                      '(:color "#dc322f" :style line))
   (set-face-underline 'flyspell-duplicate
-					  '(:color "#e5aa00" :style line))
+                      '(:color "#e5aa00" :style line))
 
   (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
   (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC")))
@@ -1709,7 +1709,7 @@ Enable the spell checking in buffers with the following major modes.
 
 #+BEGIN_SRC emacs-lisp
 (add-hook 'org-mode-hook 'flyspell-mode)
-#+END_SRC 
+#+END_SRC
 
 ** =ivy=
 =ivy= is a minimalistic completion engine. It supports fuzzy matching. But I
@@ -1722,24 +1722,24 @@ the default regexp builder with ~(swiper . ivy--regex-plus)~.
   :demand t
   :config
 
-  (ivy-mode) 
+  (ivy-mode)
   (setq ivy-use-virtual-buffers t
-		ivy-count-format "%d/%d ")
+        ivy-count-format "%d/%d ")
 
   (setq ivy-wrap t)
 
   ; Fuzzy mode
   (setq ivy-re-builders-alist
-		'((swiper . ivy--regex-plus) ; No Fuzzy matchin for swiper
-		  (t      . ivy--regex-fuzzy)))
+        '((swiper . ivy--regex-plus) ; No Fuzzy matchin for swiper
+          (t      . ivy--regex-fuzzy)))
 
   (setq ivy-initial-inputs-alist nil)
 
   :bind (("C-s" . swiper)
-		 :map ivy-minibuffer-map
-		 ("RET" . ivy-alt-done)
-		 ("C-j" . ivy-next-line)
-		 ("C-k" . ivy-previous-line))) 
+         :map ivy-minibuffer-map
+         ("RET" . ivy-alt-done)
+         ("C-j" . ivy-next-line)
+         ("C-k" . ivy-previous-line)))
 #+END_SRC
 
 Also, this alternative package complement =ivy=
@@ -1850,7 +1850,7 @@ much as possible.
 #+END_SRC
 ** Clipboard integration
 =simple-clip= enables clipboard system integration from emacs.
-   
+
 #+BEGIN_SRC emacs-lisp
 ; SimpleClip Super+C Super+X Super+V
 (use-package simpleclip
@@ -1868,7 +1868,7 @@ much as possible.
   (pdf-tools-install))
 
 #+END_SRC
-  
+
 There's a conflict between =evil-mode= and =pdf-view-mode=. =evil= cause that
 pdf display keeps blinking. [[https://github.com/politza/pdf-tools/issues/201][xuhdev]] gives a solution to deal with this conflict.
 
