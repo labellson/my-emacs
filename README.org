@@ -1504,6 +1504,39 @@ part of the file.
   :hook (csv-mode . csv-align-visible))
   #+END_SRC
 
+** =restclient-mode=
+This mode lets you explore and test HTTP REST webservices from plain
+text. Evaluate the requests with =C-c C-c= and display the results as a
+pretty-printed XML or JSON.
+
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package restclient
+  :hook (restclient-mode . company-mode)
+  :ensure t)
+#+END_SRC
+
+Thanks to =ob-restclient= is possible to provide support on =org-babel= and add
+snippets with requests in your =org-mode= files.
+
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package ob-restclient
+  :ensure t
+  :config
+
+  (org-babel-do-load-languages
+   'org-babel-load-languages '((restclient . t))))
+#+END_SRC
+
+Auto-completion for HTTP methods and headers in =restclient-mode= is provided
+by =company-restclient=
+
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package company-restclient
+  :ensure t
+  :after company
+  :config (add-to-list 'company-backends 'company-restclient))
+  #+END_SRC
+
 * Packages & Tools
 ** =which-key=
 A useful package that displays the possible key combinations when you start a
