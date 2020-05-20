@@ -1423,7 +1423,9 @@ string is to displayed"
                 (format " [%d] " mail-count))))))
 #+END_SRC
 
-Also, I define a custom function so that updating the mail is possible just by pinging the Emacs daemon. I have this function called as a post-hook every time the offlineimap is called.
+Also, I define a custom function so that updating the mail is possible just by
+pinging the Emacs daemon. I have this function called as a post-hook every time
+the offlineimap is called.
 
 #+BEGIN_SRC emacs-lisp
 (defun update-mail-in-server ()
@@ -2046,6 +2048,17 @@ configure it.
 
 (evil-set-initial-state 'sql-interactive-mode 'emacs)
 #+END_SRC
+
+** Literate Calc Mode
+Display inline calc results as overlays in markup modes as =org-mode=. It is
+possible to activate a minor mode =literate-calc-minor-mode= and use the
+overlays.
+
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package literate-calc-mode
+  :hook (org-mode . literate-calc-minor-mode)
+  :ensure t)
+  #+END_SRC
 
 * Acknowledgments
 - Thanks to Diego Vicente. He discovered me Emacs and =org-mode=. Also, many
