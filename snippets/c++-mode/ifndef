@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: ifndef directive
+# key: ifndef
+# contributor: Daniel Laguna
+# --
+#ifndef ${1: def}
+#define $1
+
+#endif
