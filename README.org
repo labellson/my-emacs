@@ -706,22 +706,6 @@ activated as a minor mode when =web-mode= or =js-mode= are activated.
   (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescript-mode)))
 #+END_SRC
 
-=Tide= stands for /TypeScript Interactive Development Environment/ for
-Emacs. Provides completion, linting and formatting for =JavaScript=,
-=TypeScript= and =JSX=. Needs the =tide= server as a dependency and a
-=jsconfig.json= file per project. Check the [[https://github.com/ananthakumaran/tide#javascript][tide repository]] for more info.
-
-#+BEGIN_SRC emacs-lisp :results silent
-(use-package tide
-  :ensure t
-  :after (js2-mode company flycheck)
-  :hook ((js2-minor-mode . tide-setup)
-         (js2-minor-mode . tide-hl-identifier-mode))
-
-  :config
-  (flycheck-add-next-checker 'javascript-eslint 'javascript-tide 'append))
-#+END_SRC
-
 ** Docker files
 Spotify created a mayor mode that provides syntax highlighting as well as the
 ability to build the image directly from the buffer with ~C-c C-b~.
@@ -850,6 +834,29 @@ this config. This [[https://emacs.stackexchange.com/questions/2884/the-old-how-t
 (add-hook 'nxml-mode-hook 'hs-minor-mode)
 (add-hook 'python-mode-hook 'hs-minor-mode)
 #+END_SRC
+** =Language Server Protocol=
+For a comparable IDE experience it is possible to use Microsoft Language Server
+Protocol in Emacs. The main objective of this project is to allow programming
+language support to be implemented independetly of any given editor. To make it
+work it is necessary to download each language respective server.
+
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package lsp-mode
+  :ensure t
+  :hook ((typescript-mode . lsp)
+         (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp
+  :config
+
+  ;; Read lsp-mode performance section
+  (setq read-process-output-max (* 1024 1024)) ;; 1mb
+  (setq gc-cons-threshold 100000000))
+
+(use-package lsp-ui :commands lsp-ui-mode)
+(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+(use-package lsp-treemacs :commands lsp-treemacs-errors-list)
+#+END_SRC
+
 * WIP
 These source blocks needs to be moved to its corresponding sections.
 
