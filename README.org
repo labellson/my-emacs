@@ -698,6 +698,14 @@ activated as a minor mode when =web-mode= or =js-mode= are activated.
   :config (setq js-indent-level 2))
 #+END_SRC
 
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package typescript-mode
+  :ensure t
+  :config
+
+  (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescript-mode)))
+#+END_SRC
+
 =Tide= stands for /TypeScript Interactive Development Environment/ for
 Emacs. Provides completion, linting and formatting for =JavaScript=,
 =TypeScript= and =JSX=. Needs the =tide= server as a dependency and a
