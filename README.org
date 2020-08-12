@@ -585,20 +585,10 @@ I've set a global =tab-width= in basic emacs setup. But it seems not working in
         (setq tab-width 4)))
 #+END_SRC
 
-** Regular Python configuration
-=elpy= provides IDE-kind functionality for Emacs. Right now is the best python
-package I tried for emacs. It comes with =flymake= as default syntax checker
-though. I deactivated it in favor of =flycheck=.
+Activate =pyvenv-mode= in =python-mode=
 
 #+BEGIN_SRC emacs-lisp
-(use-package elpy
-  :ensure t
-  :config
-
-  (elpy-enable)
-  (remove-hook 'elpy-modules 'elpy-module-flymake)
-
-  (add-hook 'elpy-mode-hook (lambda () (highlight-indentation-mode -1))))
+(add-hook 'python-mode-hook 'pyvenv-mode)
 #+END_SRC
 
 *** Package for Python docstrings
@@ -843,18 +833,30 @@ work it is necessary to download each language respective server.
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package lsp-mode
   :ensure t
-  :hook ((typescript-mode . lsp)
+  :hook (((typescript-mode python-mode) . lsp)
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp
   :config
 
   ;; Read lsp-mode performance section
   (setq read-process-output-max (* 1024 1024)) ;; 1mb
-  (setq gc-cons-threshold 100000000))
+  (setq gc-cons-threshold 100000000)
 
-(use-package lsp-ui :commands lsp-ui-mode)
-(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
-(use-package lsp-treemacs :commands lsp-treemacs-errors-list)
+  ;; python-language-server configuration
+  (setq lsp-pyls-configuration-sources ["flake8"])
+  (setq lsp-pyls-plugins-flake8-enabled t))
+
+(use-package lsp-ui
+  :ensure t
+  :commands lsp-ui-mode)
+
+(use-package lsp-ivy
+  :ensure t
+  :commands lsp-ivy-workspace-symbol)
+
+(use-package lsp-treemacs
+  :ensure t
+  :commands lsp-treemacs-errors-list)
 #+END_SRC
 
 * WIP
