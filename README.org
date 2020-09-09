@@ -1368,15 +1368,21 @@ store emails into the agenda file.
           (:name "Inbox"
            :query "maildir:/fastmail/INBOX"
            :key ?i)
-          (:name "Neerlandes"
-           :query "maildir:/fastmail/Neerlandes"
-           :key ?n)
+          (:name "Banking"
+           :query "maildir:/fastmail/Banking"
+           :key ?b)
           (:name "Jobs"
            :query "maildir:/fastmail/Jobs"
            :key ?j)
+          (:name "Neerlandes"
+           :query "maildir:/fastmail/Neerlandes"
+           :key ?n)
           (:name "NLGov"
            :query "maildir:/fastmail/NLGov"
-           :key ?g))))
+           :key ?g)
+          (:name "Transport"
+           :query "maildir:/fastmail/Transport"
+           :key ?t))))
 #+END_SRC
 
 As I use =evil-mode=, lets enable =vim-like= keystrokes inside =mu4e=.
